@@ -68,6 +68,20 @@ class Solution
 public:
     vector<string> buildArray(vector<int> &target, int n)
     {
+        int num = 1;
+        vector<string> result;
+        for (size_t i = 0; i < target.size(); i++)
+        {
+            result.push_back("Push");
+            if (target[i] != num)
+            {
+                result.push_back("Pop");
+                i--;
+            }
+            if (num < n)
+                num++;
+        }
+        return (result);
     }
 };
 
