@@ -51,37 +51,43 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <stack>
 
 class Solution
 {
 private:
-    void do_expression(size_t i, vector<string> &tokens, int num1, int num2)
+    void do_expression(size_t i, vector<string> &tokens, int num1, int num2, stack<int> &aux)
     {
         if (tokens[i] == "/")
-            tokens[i] = to_string(num1 / num2);
+            aux.push(num1 / num2);
         if (tokens[i] == "*")
-            tokens[i] = to_string(num1 * num2);
+            aux.push(num1 * num2);
         if (tokens[i] == "+")
-            tokens[i] = to_string(num1 + num2);
+            aux.push(num1 + num2);
         if (tokens[i] == "-")
-            tokens[i] = to_string(num1 - num2);
-        tokens.erase(tokens.begin() + (i - 1));
-        tokens.erase(tokens.begin() + (i - 2));
+            aux.push(num1 - num2);
     }
 
 public:
     int evalRPN(vector<string> &tokens)
     {
+        stack<int> aux;
+        int x, y;
         for (size_t i = 0; i < tokens.size(); i++)
         {
             if (tokens[i] == "+" || tokens[i] == "-" ||
                 tokens[i] == "/" || tokens[i] == "*")
             {
-                do_expression(i, tokens, stoi(tokens[i - 2]), stoi(tokens[i - 1]));
-                i = 0;
+                y = aux.top();
+                aux.pop();
+                x = aux.top();
+                aux.pop();
+                do_expression(i, tokens, x, y, aux);
             }
+            else
+                aux.push(stoi(tokens[i]));
         }
-        return (stoi(tokens[0]));
+        return (aux.top());
     }
 };
 

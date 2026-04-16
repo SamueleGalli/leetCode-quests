@@ -62,12 +62,61 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <stack>
 
 class Solution
 {
+private:
+    int take_id(const string &logs)
+    {
+        size_t i = 0;
+        while (logs[i] != ':')
+        {
+            i++;
+        }
+        return (stoi(logs.substr(0, i)));
+    }
+
+    int take_time(const string &logs)
+    {
+        size_t i = logs.size() - 1;
+        while (logs[i] != ':')
+        {
+            i--;
+        }
+        return (stoi(logs.substr(i + 1)));
+    }
+
 public:
     vector<int> exclusiveTime(int n, vector<string> &logs)
     {
+        vector<int> result(n, 0);
+        stack<int> stack;
+        int time = 0;
+        int last_time = 0;
+        for (size_t i = 0; i < logs.size(); i++)
+        {
+            time = take_time(logs[i]);
+            if (stack.empty())
+            {
+                stack.push(take_id(logs[i]));
+                last_time = time;
+            }
+            else if (logs[i].find("end") != string::npos)
+            {
+                result[stack.top()] += (time - last_time) + 1;
+                stack.pop();
+                last_time = time + 1;
+            }
+            else
+            {
+                result[stack.top()] += time - last_time;
+                stack.push(take_id(logs[i]));
+                last_time = time;
+            }
+        }
+        return (result);
     }
 };
 
@@ -76,7 +125,7 @@ void print_result(const vector<int> &result)
     cout << "\n----------------------------------------------------------\nResult\n{";
     for (size_t i = 0; i < result.size(); i++)
     {
-        cout << result[i] << endl;
+        cout << result[i];
         if (i + 1 < result.size())
             cout << " , ";
     }
@@ -102,6 +151,11 @@ int main()
 
     logs = {"0:start:0", "0:start:2", "0:end:5", "1:start:6", "1:end:6", "0:end:7"};
     n = 2;
+    result = s.exclusiveTime(n, logs);
+    print_result(result);
+
+    logs = {"0:start:0", "0:end:0", "1:start:1", "1:end:1", "2:start:2", "2:end:2", "2:start:3", "2:end:3"};
+    n = 3;
     result = s.exclusiveTime(n, logs);
     print_result(result);
 }
