@@ -41,12 +41,24 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
-
+#include <stack>
 class Solution
 {
 public:
     vector<int> finalPrices(vector<int> &prices)
     {
+        vector<int> answer = prices;
+        stack<size_t> index;
+        for (size_t i = 0; i < prices.size(); i++)
+        {
+            while (!index.empty() && prices[i] <= prices[index.top()])
+            {
+                answer[index.top()] = prices[index.top()] - prices[i];
+                index.pop();
+            }
+            index.push(i);
+        }
+        return (answer);
     }
 };
 
@@ -57,7 +69,7 @@ void stamp_prices(const vector<int> &result)
     {
         cout << result[i];
         if (i + 1 < result.size())
-            cout << " , ";
+            cout << ", ";
     }
     cout << "}\n-----------------------------------\n";
 }
@@ -65,18 +77,18 @@ void stamp_prices(const vector<int> &result)
 int main()
 {
     Solution s;
-    vector<int> result;
+    vector<int> answer;
     vector<int> prices;
 
     prices = {8, 4, 6, 2, 3};
-    result = s.finalPrices(prices);
-    stamp_prices(result);
+    answer = s.finalPrices(prices);
+    stamp_prices(answer);
 
     prices = {1, 2, 3, 4, 5};
-    result = s.finalPrices(prices);
-    stamp_prices(result);
+    answer = s.finalPrices(prices);
+    stamp_prices(answer);
 
     prices = {10, 1, 1, 6};
-    result = s.finalPrices(prices);
-    stamp_prices(result);
+    answer = s.finalPrices(prices);
+    stamp_prices(answer);
 }
