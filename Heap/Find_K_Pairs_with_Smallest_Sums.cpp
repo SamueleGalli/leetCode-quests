@@ -34,13 +34,50 @@ Constraints:
 using namespace std;
 
 #include <iostream>
+#include <queue>
 #include <vector>
+
+struct Smallest
+{
+    size_t i, j;
+    int sum;
+
+    Smallest(size_t i, size_t j, int sum) : i(i), j(j), sum(sum)
+    {
+    }
+    bool operator>(const Smallest &small) const
+    {
+        return sum > small.sum;
+    }
+};
 
 class Solution
 {
 public:
     vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k)
     {
+        vector<vector<int>> result;
+        priority_queue<Smallest, vector<Smallest>, greater<Smallest>> find_min;
+
+        size_t j, i = 0;
+        while (i < nums1.size() && i < static_cast<size_t>(k))
+        {
+            find_min.push({i, 0, nums1[i] + nums2[0]});
+            i++;
+        }
+
+        while (k > 0)
+        {
+            i = find_min.top().i;
+            j = find_min.top().j;
+
+            result.push_back({nums1[i], nums2[j]});
+            find_min.pop();
+            if (j + 1 < nums2.size())
+                find_min.push({i, j + 1, nums1[i] + nums2[j + 1]});
+            k--;
+        }
+        return (result);
     }
 };
 
@@ -49,12 +86,12 @@ void stamp_vec(const vector<vector<int>> &result)
     cout << "result = {";
     for (size_t i = 0; i < result.size(); i++)
     {
-        cout << "{"
+        cout << "{";
         cout << result[i][0] << ", " << result[i][1];
         if (i + 1 < result.size())
             cout << "}, ";
     }
-    cout << "};\n------------------------------------------------------------\n"
+    cout << "};\n------------------------------------------------------------\n";
 }
 
 int main()
