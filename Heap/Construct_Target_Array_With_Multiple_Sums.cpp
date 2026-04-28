@@ -34,11 +34,13 @@ Example 3:
 
 Constraints:
 
-    n == target.length
-    1 <= n <= 5 * 104
-    1 <= target[i] <= 109
+    * n == target.length
+    * 1 <= n <= 5 * 104
+    * 1 <= target[i] <= 109
 */
 
+/*
+TODO Funziona solo molto lento da ottimizzare con '%' forse o '/' credo?*/
 using namespace std;
 
 #include <iostream>
@@ -47,9 +49,31 @@ using namespace std;
 
 class Solution
 {
+
 public:
     bool isPossible(vector<int> &target)
     {
+        priority_queue<int> aux;
+        int total_sum = 0;
+        int new_push = 0;
+        int maximum = 0;
+        for (size_t i = 0; i < target.size(); i++)
+        {
+            total_sum += target[i];
+            aux.push(target[i]);
+        }
+        while (!aux.empty() && aux.top() > 1)
+        {
+            maximum = aux.top();
+            total_sum -= maximum;
+            new_push = maximum - total_sum;
+            aux.pop();
+            aux.push(new_push);
+            total_sum += new_push;
+            if (new_push <= 0)
+                return (false);
+        }
+        return (true);
     }
 };
 
@@ -63,11 +87,23 @@ int main()
     result = s.isPossible(target);
     cout << boolalpha << "result = " << result << "\n-------------------------------------------------------\n";
 
-    target = {1,1,1,2};
+    target = {1, 1, 1, 2};
     result = s.isPossible(target);
     cout << boolalpha << "result = " << result << "\n-------------------------------------------------------\n";
 
-    target = {8,5};
+    target = {8, 5};
+    result = s.isPossible(target);
+    cout << boolalpha << "result = " << result << "\n-------------------------------------------------------\n";
+
+    target = {3, 3, 6};
+    result = s.isPossible(target);
+    cout << boolalpha << "result = " << result << "\n-------------------------------------------------------\n";
+
+    target = {1, 1, 2};
+    result = s.isPossible(target);
+    cout << boolalpha << "result = " << result << "\n-------------------------------------------------------\n";
+
+    target = {1, 1000000000};
     result = s.isPossible(target);
     cout << boolalpha << "result = " << result << "\n-------------------------------------------------------\n";
 }
