@@ -37,6 +37,18 @@ class Solution
 public:
     bool detectCapitalUse(string word)
     {
+        int c = 0;
+        for (size_t i = 0; i < word.size(); i++)
+        {
+            if (word[i] >= 65 && word[i] <= 90)
+                c++;
+        }
+        cout << "c = " << c << endl;
+        if (c == static_cast<int>(word.size()) ||
+            (c == 1 && isupper(word[0])) || c == 0)
+            return (true);
+        else
+            return (false);
     }
 };
 
@@ -44,7 +56,7 @@ int main()
 {
     Solution s;
     string word;
-    string result;
+    bool result;
 
     word = "USA";
     result = s.detectCapitalUse(word);
