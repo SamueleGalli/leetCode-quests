@@ -75,12 +75,84 @@ Constraints:
 using namespace std;
 
 #include <iostream>
+#include <algorithm>
+#include <string>
 
 class Solution
 {
+private:
+    void mask_email(string &s, string &result, bool is_domain = false)
+    {
+        for (size_t i = 0; i < s.size(); i++)
+        {
+            if (s[i] >= 'A' && s[i] <= 'Z')
+                s[i] = s[i] + 32;
+
+            if (i == 0)
+            {
+                result += s[i];
+                result += "*****";
+            }
+            else if (s[i] == '@')
+            {
+                result += s[i - 1];
+                result += "@";
+                is_domain = true;
+            }
+            else if (is_domain == true)
+                result += s[i];
+        }
+    }
+    int count_digit_and_format(string &s)
+    {
+        string new_s;
+        int c = 0;
+        for (size_t i = 0; i < s.size(); i++)
+        {
+            if (s[i] >= '0' && s[i] <= '9')
+            {
+                new_s += s[i];
+                c++;
+            }
+        }
+        s = new_s;
+        return (c);
+    }
+
+    void mask_number(string &s, string &result)
+    {
+        int digit = count_digit_and_format(s);
+        int country_code = digit - 10;
+
+        if (country_code > 0)
+        {
+            result += '+';
+            result += string(country_code, '*');
+            result += '-';
+            digit -= country_code;
+        }
+
+        for (size_t i = 0 + country_code; i < s.size(); i++)
+        {
+            if (digit <= 4)
+                result += s[i];
+            else
+                result += '*';
+            digit--;
+            if (digit == 4 || digit == 7)
+                result += '-';
+        }
+    }
+
 public:
     string maskPII(string s)
     {
+        string result;
+        if (find(s.begin(), s.end(), '@') != s.end())
+            mask_email(s, result);
+        else
+            mask_number(s, result);
+        return (result);
     }
 };
 
@@ -99,6 +171,10 @@ int main()
     cout << "result = " << result << endl;
 
     word = "1(234)567-890";
+    result = s.maskPII(word);
+    cout << "result = " << result << endl;
+
+    word = "123(234)567-890";
     result = s.maskPII(word);
     cout << "result = " << result << endl;
 }
