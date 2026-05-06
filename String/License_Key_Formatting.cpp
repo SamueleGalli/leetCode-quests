@@ -60,10 +60,10 @@ public:
             }
         } while (i > 0);
         reverse(result.begin(), result.end());
+        
         if (result[0] == '-')
-        {
             result.erase(result.begin());
-        }
+
         return (result);
     }
 };
