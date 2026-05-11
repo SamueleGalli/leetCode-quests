@@ -40,12 +40,46 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include <vector>
+#include <queue>
 
 struct tree
 {
     vector<int> apples;
     vector<int> days;
     int result;
+};
+
+class Solution
+{
+public:
+    int eatenApples(vector<int> &apples, vector<int> &days)
+    {
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> time;
+        size_t i = 0;
+        int eat = 0;
+        int day = 0;
+
+        while (!time.empty() || i < days.size())
+        {
+            while (!time.empty() && day == time.top().first)
+                time.pop();
+            if (i < days.size())
+            {
+                if (days[i] > 0)
+                    time.push({days[i] + day, i});
+                i++;
+            }
+            if (!time.empty() && apples[time.top().second] > 0)
+            {
+                eat++;
+                apples[time.top().second]--;
+            }
+            while (!time.empty() && apples[time.top().second] == 0)
+                time.pop();
+            day++;
+        }
+        return (eat);
+    }
 };
 
 int main()
@@ -58,6 +92,7 @@ int main()
         {{3, 0, 0, 0, 0, 2}, {3, 0, 0, 0, 0, 2}, 5},
         {{2, 1, 10}, {2, 10, 1}, 4},
         {{9, 2}, {3, 5}, 5},
+        {{2, 1, 1, 4, 5}, {10, 10, 6, 4, 2}, 8},
     };
 
     for (tree eated : test)
@@ -66,7 +101,7 @@ int main()
         if (eated.result == result)
             cout << "corretto numero di mangiate\n\n";
         else
-            cout << "sbagliato numero di mangiate\n\n";
+            cout << "sbagliato numero di mangiate (" << result << ")\n\n";
         cout << "risultato aspettato = " << eated.result << endl;
     }
 }
