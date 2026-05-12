@@ -52,7 +52,7 @@ Constraints:
     * 1 <= n <= 100
     * 2 <= logs.length <= 500
     * 0 <= function_id < n
-    * 0 <= timestamp <= 109
+    * 0 <= timestamp <= 10^9
     * No two start events will happen at the same timestamp.
     * No two end events will happen at the same timestamp.
     * Each function has an "end" log for each "start" log.

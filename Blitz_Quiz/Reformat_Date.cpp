@@ -41,9 +41,63 @@ using namespace std;
 
 class Solution
 {
+private:
+    size_t formatter(string &date, size_t i, string &format, int option = 0)
+    {
+        string temp;
+        for (; i < date.size() && date[i] != ' '; i++)
+        {
+            if (date[i] >= '0' && date[i] <= '9')
+                temp += date[i];
+        }
+
+        if (option == 0)
+        {
+            if (temp.size() == 1)
+                format = '0' + temp;
+            else
+                format = temp;
+            format = '-' + format;
+            i++;
+        }
+        else
+            format = temp + '-' + format;
+
+        return (i);
+    }
+
+    void format_month(string month, string &format)
+    {
+        vector<string> months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        string temp;
+
+        for (size_t i = 0; i < months.size(); i++)
+        {
+            if (months[i] == month)
+            {
+                temp = to_string(i + 1);
+                if (i + 1 < 10)
+                {
+                    format = '0' + temp + format;
+                }
+                else
+                    format = temp + format;
+                break;
+            }
+        }
+    }
+
 public:
     string reformatDate(string date)
     {
+        string format;
+        size_t i = 0;
+
+        i = formatter(date, i, format);
+        format_month(date.substr(i, 3), format);
+        i += 4;
+        i = formatter(date, i, format, 1);
+        return (format);
     }
 };
 

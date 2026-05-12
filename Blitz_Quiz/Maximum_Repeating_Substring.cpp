@@ -34,12 +34,27 @@ Constraints:
 using namespace std;
 
 #include <iostream>
+#include <algorithm>
+#include <string>
 
 class Solution
 {
 public:
     int maxRepeating(string sequence, string word)
     {
+        int count;
+        int total = 0;
+
+        for (size_t i = 0; i < sequence.size(); i++)
+        {
+            count = 0;
+            for (size_t j = i; sequence.substr(j, word.size()) == word; j += word.size())
+            {
+                count++;
+            }
+            total = max(total, count);
+        }
+        return (total);
     }
 };
 
@@ -62,6 +77,11 @@ int main()
 
     sequence = "ababc";
     word = "ac";
+    result = s.maxRepeating(sequence, word);
+    cout << "result = " << result << "\n\n\n";
+
+    sequence = "aaabaaaabaaabaaaabaaaabaaaabaaaaba";
+    word = "aaaba";
     result = s.maxRepeating(sequence, word);
     cout << "result = " << result << "\n\n\n";
 }

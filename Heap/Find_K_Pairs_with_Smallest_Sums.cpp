@@ -23,10 +23,10 @@ Example 2:
 
 Constraints:
 
-    * 1 <= nums1.length, nums2.length <= 105
-    * -109 <= nums1[i], nums2[i] <= 109
+    * 1 <= nums1.length, nums2.length <= 10^5
+    * -10^9 <= nums1[i], nums2[i] <= 10^9
     * nums1 and nums2 both are sorted in non-decreasing order.
-    * 1 <= k <= 104
+    * 1 <= k <= 10^4
     * k <= nums1.length * nums2.length
 
 */

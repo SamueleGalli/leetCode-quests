@@ -35,8 +35,8 @@ Example 3:
 Constraints:
 
     * n == target.length
-    * 1 <= n <= 5 * 104
-    * 1 <= target[i] <= 109
+    * 1 <= n <= 5 * 10^4
+    * 1 <= target[i] <= 10^9
 */
 
 using namespace std;

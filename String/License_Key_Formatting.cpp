@@ -24,9 +24,9 @@ Example 2:
 
 Constraints:
 
-    * 1 <= s.length <= 105
+    * 1 <= s.length <= 10^5
     * s consists of English letters, digits, and dashes '-'.
-    * 1 <= k <= 104
+    * 1 <= k <= 10^4
 */
 
 using namespace std;
