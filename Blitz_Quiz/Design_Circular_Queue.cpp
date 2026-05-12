@@ -46,15 +46,15 @@ Constraints:
 */
 
 #include <iostream>
-#include <deque>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class MyCircularQueue
 {
-private:
-    deque<int> circular;
-    size_t size = 0;
+    vector<int> mat;
+    size_t size;
 
 public:
     MyCircularQueue(int k)
@@ -64,9 +64,9 @@ public:
 
     bool enQueue(int value)
     {
-        if (circular.size() < size)
+        if (mat.size() < size)
         {
-            circular.push_back(value);
+            mat.push_back(value);
             return (true);
         }
         return (false);
@@ -74,9 +74,9 @@ public:
 
     bool deQueue()
     {
-        if (!circular.empty())
+        if (!mat.empty())
         {
-            circular.pop_front();
+            mat.erase(mat.begin());
             return (true);
         }
         return (false);
@@ -84,30 +84,29 @@ public:
 
     int Front()
     {
-        if (!circular.empty())
-            return (circular.front());
-        return (-1);
+        if (!mat.empty())
+            return (mat[0]);
+        else
+            return (-1);
     }
 
     int Rear()
     {
-        if (!circular.empty())
-        {
-            return (circular.back());
-        }
+        if (!mat.empty())
+            return (mat.back());
         return (-1);
     }
 
     bool isEmpty()
     {
-        if (circular.empty())
+        if (mat.empty())
             return (true);
         return (false);
     }
 
     bool isFull()
     {
-        if (circular.size() == size)
+        if (mat.size() == size)
             return (true);
         return (false);
     }
