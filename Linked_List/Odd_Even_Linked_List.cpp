@@ -51,7 +51,7 @@ public:
         ListNode *Even = nullptr;
         ListNode *temp_even;
 
-        while (head && head->next && head->next)
+        while (head && head->next && head->next->next)
         {
             if (!Even)
             {
@@ -66,15 +66,15 @@ public:
             head->next = head->next->next;
             head = head->next;
         }
-        if (head && head->next)
+        if (Even)
         {
-            Even->next = head->next;
-            Even = Even->next;
-            if (Even)
+            Even->next = nullptr;
+            if (head && head->next)
             {
-                Even->next = nullptr;
-                head->next = temp_even;
+                Even->next = head->next;
+                Even = Even->next;
             }
+            head->next = temp_even;
         }
         return (new_head);
     }
@@ -82,6 +82,8 @@ public:
 
 void create_list(vector<int> &nums, ListNode *&head)
 {
+    if (nums.empty())
+        return;
     head = new ListNode(nums[0]);
     ListNode *temp = head;
     for (size_t i = 1; i < nums.size(); i++)
@@ -119,49 +121,48 @@ void delete_node(ListNode *&head)
 
 int main()
 {
-    {
-        Solution s;
-        vector<int> nums;
-        ListNode *head;
 
-        nums = {1, 2, 3, 4, 5};
-        create_list(nums, head);
-        cout << "list created\n";
-        print_node(head);
-        head = s.oddEvenList(head);
-        print_node(head);
-        delete_node(head);
+    Solution s;
+    vector<int> nums;
+    ListNode *head;
 
-        nums = {2, 1, 3, 5, 6, 4, 7};
-        create_list(nums, head);
-        cout << "list created\n";
-        print_node(head);
-        head = s.oddEvenList(head);
-        print_node(head);
-        delete_node(head);
+    nums = {1, 2, 3, 4, 5};
+    create_list(nums, head);
+    cout << "list created\n";
+    print_node(head);
+    head = s.oddEvenList(head);
+    print_node(head);
+    delete_node(head);
 
-        nums = {2, 1, 3, 5};
-        create_list(nums, head);
-        cout << "list created\n";
-        print_node(head);
-        head = s.oddEvenList(head);
-        print_node(head);
-        delete_node(head);
+    nums = {2, 1, 3, 5, 6, 4, 7};
+    create_list(nums, head);
+    cout << "list created\n";
+    print_node(head);
+    head = s.oddEvenList(head);
+    print_node(head);
+    delete_node(head);
 
-        nums = {1};
-        create_list(nums, head);
-        cout << "list created\n";
-        print_node(head);
-        head = s.oddEvenList(head);
-        print_node(head);
-        delete_node(head);
+    nums = {2, 1, 3, 5};
+    create_list(nums, head);
+    cout << "list created\n";
+    print_node(head);
+    head = s.oddEvenList(head);
+    print_node(head);
+    delete_node(head);
 
-        nums = {1, 1};
-        create_list(nums, head);
-        cout << "list created\n";
-        print_node(head);
-        head = s.oddEvenList(head);
-        print_node(head);
-        delete_node(head);
-    }
+    nums = {1};
+    create_list(nums, head);
+    cout << "list created\n";
+    print_node(head);
+    head = s.oddEvenList(head);
+    print_node(head);
+    delete_node(head);
+
+    nums = {1, 1};
+    create_list(nums, head);
+    cout << "list created\n";
+    print_node(head);
+    head = s.oddEvenList(head);
+    print_node(head);
+    delete_node(head);
 }

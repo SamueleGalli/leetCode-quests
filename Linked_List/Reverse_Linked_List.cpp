@@ -1,25 +1,32 @@
 /*
-Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+Given the head of a singly linked list, reverse the list, and return the reversed list.
 
 
 
 Example 1:
 
-    Input: head = [1,1,2]
-    Output: [1,2]
+
+    Input: head = [1,2,3,4,5]
+    Output: [5,4,3,2,1]
 
 Example 2:
 
+    Input: head = [1,2]
+    Output: [2,1]
 
-    Input: head = [1,1,2,3,3]
-    Output: [1,2,3]
+Example 3:
+
+    Input: head = []
+    Output: []
 
 
 Constraints:
 
-* The number of nodes in the list is in the range [0, 300].
-* -100 <= Node.val <= 100
-* The list is guaranteed to be sorted in ascending order.
+The number of nodes in the list is the range [0, 5000].
+-5000 <= Node.val <= 5000
+
+
+Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
 */
 
 // Definition for singly-linked list.
@@ -33,29 +40,27 @@ struct ListNode
 };
 
 using namespace std;
+
 #include <iostream>
 #include <vector>
 
 class Solution
 {
 public:
-    ListNode *deleteDuplicates(ListNode *head)
+    ListNode *reverseList(ListNode *head)
     {
-        ListNode *temp;
-        ListNode *orign = head;
-        while (head != nullptr && head->next != nullptr)
+        ListNode *finally;
+        ListNode *next;
+        if (head && head->next)
         {
-            temp = head;
-            if (head->val == head->next->val)
-            {
-                temp = temp->next;
-                head->next = head->next->next;
-                delete (temp);
-            }
-            else
-                head = head->next;
+
+            next = head->next;
+            finally = reverseList(head->next);
+            next->next = head;
+            head->next = nullptr;
+            return (finally);
         }
-        return (orign);
+        return (head);
     }
 };
 
@@ -100,31 +105,35 @@ void delete_node(ListNode *&head)
 
 int main()
 {
+
     Solution s;
     vector<int> nums;
     ListNode *head;
 
-    nums = {1, 1, 2};
+    nums = {1, 2, 3, 4, 5};
     create_list(nums, head);
-    cout << "list created\n";
+    cout << "print list\n";
     print_node(head);
-    head = s.deleteDuplicates(head);
+    head = s.reverseList(head);
+    cout << "head resulted\n";
     print_node(head);
     delete_node(head);
 
-    nums = {1, 1, 2, 3, 3};
+    nums = {1, 2};
     create_list(nums, head);
-    cout << "list created\n";
+    cout << "print list\n";
     print_node(head);
-    head = s.deleteDuplicates(head);
+    head = s.reverseList(head);
+    cout << "head resulted\n";
     print_node(head);
     delete_node(head);
 
-    nums = {1, 1, 1};
+    nums = {};
     create_list(nums, head);
-    cout << "list created\n";
+    cout << "print list\n";
     print_node(head);
-    head = s.deleteDuplicates(head);
+    head = s.reverseList(head);
+    cout << "head resulted\n";
     print_node(head);
     delete_node(head);
 }
