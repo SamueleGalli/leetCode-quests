@@ -53,7 +53,6 @@ public:
         ListNode *next;
         if (head && head->next)
         {
-
             next = head->next;
             finally = reverseList(head->next);
             next->next = head;
