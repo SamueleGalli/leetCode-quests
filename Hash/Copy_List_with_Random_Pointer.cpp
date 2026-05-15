@@ -59,66 +59,30 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 class Solution
 {
-private:
-    void set_random(Node *temp, Node *clone)
-    {
-        while (temp)
-        {
-            if (temp->random)
-                clone->random = temp->random->next;
-            else
-                clone->random = nullptr;
-            temp = clone->next;
-            if (temp)
-                clone = temp->next;
-        }
-    }
-/*
-Ce un errore qui i nodi si collegano ma male e si perdono
-*/
-    void set_new_next(Node *temp, Node *clone)
-    {
-        Node *next;
-        while (temp)
-        {
-            if (temp->next && temp->next->next)
-            {
-                next = temp->next->next;
-                clone->next = clone->next->next;
-                temp->next = next;
-                clone = clone->next;
-            }
-            else
-            {
-                clone->next = nullptr;
-                temp->next = nullptr;
-            }
-            temp = temp->next;
-        }
-    }
-
 public:
     Node *copyRandomList(Node *head)
     {
-        if (!head)
-            return (head);
+        unordered_map<Node *, Node *> clone;
         Node *temp = head;
-        Node *next;
+
         while (temp)
         {
-            next = temp->next;
-            temp->next = new Node(temp->val);
-            temp = temp->next;
-            temp->next = next;
+            clone[temp] = new Node(temp->val);
             temp = temp->next;
         }
-        temp = head->next;
-        set_random(head, temp);
-        set_new_next(head, temp);
-        return (temp);
+
+        temp = head;
+        while (temp)
+        {
+            clone[temp]->next = temp->next ? clone[temp->next] : nullptr;
+            clone[temp]->random = temp->random ? clone[temp->random] : nullptr;
+            temp = temp->next;
+        }
+        return (clone[head]);
     }
 };
 
@@ -181,6 +145,7 @@ void delete_node_random(Node *&head)
     while (head != nullptr)
     {
         temp = head;
+        head = head->next;
         delete (temp);
     }
 }
@@ -203,32 +168,32 @@ int main()
     delete_node_random(head);
     cout << "------------------------------------------\n";
 
-    /*   nums = {1, 2};
-      random = {1, 1};
-      create_list_random(nums, random, head);
-      print_node_random(head);
-      new_head = s.copyRandomList(head);
-      print_node_random(new_head);
-      delete_node_random(new_head);
-      delete_node_random(head);
-      cout << "------------------------------------------\n";
+    nums = {1, 2};
+    random = {1, 1};
+    create_list_random(nums, random, head);
+    print_node_random(head);
+    new_head = s.copyRandomList(head);
+    print_node_random(new_head);
+    delete_node_random(new_head);
+    delete_node_random(head);
+    cout << "------------------------------------------\n";
 
-      nums = {};
-      random = {};
-      create_list_random(nums, random, head);
-      print_node_random(head);
-      new_head = s.copyRandomList(head);
-      print_node_random(new_head);
-      delete_node_random(new_head);
-      delete_node_random(head);
-      cout << "------------------------------------------\n";
+    nums = {};
+    random = {};
+    create_list_random(nums, random, head);
+    print_node_random(head);
+    new_head = s.copyRandomList(head);
+    print_node_random(new_head);
+    delete_node_random(new_head);
+    delete_node_random(head);
+    cout << "------------------------------------------\n";
 
-      nums = {3, 3, 3};
-      random = {-1, 0, -1};
-      create_list_random(nums, random, head);
-      print_node_random(head);
-      new_head = s.copyRandomList(head);
-      print_node_random(new_head);
-      delete_node_random(new_head);
-      delete_node_random(head); */
+    nums = {3, 3, 3};
+    random = {-1, 0, -1};
+    create_list_random(nums, random, head);
+    print_node_random(head);
+    new_head = s.copyRandomList(head);
+    print_node_random(new_head);
+    delete_node_random(new_head);
+    delete_node_random(head);
 }

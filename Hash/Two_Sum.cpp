@@ -39,14 +39,14 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 class Solution
 {
 public:
     vector<int> twoSum(vector<int> &nums, int target)
     {
-        map<int, size_t> aux;
+        unordered_map<int, size_t> aux;
         vector<int> result(0, 2);
         for (size_t i = 0; i < nums.size(); i++)
         {
