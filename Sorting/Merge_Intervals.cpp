@@ -47,15 +47,16 @@ public:
              { return (first[0] < second[0]); });
         limit.first = intervals[0][0];
         limit.second = intervals[0][1];
+        result.reserve(intervals.size());
 
         for (size_t i = 1; i < intervals.size(); i++)
         {
-            if (intervals[i - 1][1] >= intervals[i][0])
+            if (limit.second >= intervals[i][0])
             {
                 limit.first = min(intervals[i - 1][0], limit.first);
                 limit.second = max(intervals[i][1], limit.second);
             }
-            else
+            else if (intervals[i][0] > limit.second)
             {
                 result.push_back({limit.first, limit.second});
                 limit.first = intervals[i][0];
@@ -116,6 +117,14 @@ int main()
     print_result(result);
 
     intervals = {{0, 2}, {1, 4}, {2, 6}};
+    result = s.merge(intervals);
+    print_result(result);
+
+    intervals = {{{2,3},{4,5},{6,7},{8,9},{1,10}}};
+    result = s.merge(intervals);
+    print_result(result);
+
+    intervals = {{0,2},{2,3},{4,4},{0,1},{5,7},{4,5},{0,0}};
     result = s.merge(intervals);
     print_result(result);
 }
