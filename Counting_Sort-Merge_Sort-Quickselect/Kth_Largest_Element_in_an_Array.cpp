@@ -23,11 +23,6 @@ Constraints:
 * -10^4 <= nums[i] <= 10^4
 */
 
-/*
-TODO fixare l'ulitmo errore
-TODO dare un occhi a quicksort
-*/
-
 using namespace std;
 
 #include <iostream>
@@ -43,13 +38,17 @@ public:
             return (0);
 
         int j = nums.size() - 1, i = 0;
+        int left, right, pivot;
         srand(time(nullptr));
 
         while (1)
         {
             if (i >= j)
                 return (nums[i]);
-            int pivot = nums[(rand() % (j - i + 1)) + i];
+
+            pivot = nums[(rand() % (j - i + 1)) + i];
+            left = i, right = j;
+
             while (1)
             {
                 while (nums[i] < pivot)
@@ -62,8 +61,13 @@ public:
                 i++;
                 j--;
             }
-            if (j < nums.size() - k)
-                i = i + 1;
+            if (j < static_cast<int>(nums.size()) - k)
+            {
+                i = j + 1;
+                j = right;
+            }
+            else
+                i = left;
         }
     }
 };
@@ -96,6 +100,11 @@ int main()
     cout << "result = " << result << endl;
 
     nums = {-1, -2, 3, 50};
+    k = 8;
+    result = s.findKthLargest(nums, k);
+    cout << "result = " << result << endl;
+
+    nums = {-1, -2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 39, 90, 123, 43, 54};
     k = 8;
     result = s.findKthLargest(nums, k);
     cout << "result = " << result << endl;
