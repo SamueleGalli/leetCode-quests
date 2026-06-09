@@ -43,13 +43,26 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-//Todo Dummy node con ordinamento da inizio a fine s etrovo minore(mi concentrero su next e teste)
-
 class Solution
 {
 public:
     ListNode *insertionSortList(ListNode *head)
     {
+        ListNode dummy(0);
+        ListNode *start = &dummy;
+        ListNode *temp = head;
+        ListNode *next = nullptr;
+        while (temp)
+        {
+            start = &dummy;
+            next = temp->next;
+            while (start->next && temp->val > start->next->val)
+                start = start->next;
+            temp->next = start->next;
+            start->next = temp;
+            temp = next;
+        }
+        return (dummy.next);
     }
 };
 
