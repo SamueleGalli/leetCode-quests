@@ -37,14 +37,14 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
-//TODO Dividere i recinti e mantenere le stesse regole (+1, -1)
+
 class Solution
 {
 public:
     int search(vector<int> &nums, int target)
     {
         int low = 0;
-        int high = nums.size();
+        int high = nums.size() - 1;
         int med;
 
         while (low <= high)
@@ -52,12 +52,19 @@ public:
             med = (low + high) / 2;
             if (nums[med] == target)
                 return (med);
-            else if (nums[low] <= nums[med] && target >= nums[low])
+            else if (nums[low] <= nums[med])
             {
-                if (nums[med] > target)
+                if (target <= nums[med] && target >= nums[low])
                     high = med - 1;
                 else
                     low = med + 1;
+            }
+            else
+            {
+                if (target <= nums[high] && target >= nums[med])
+                    low = med + 1;
+                else
+                    high = med - 1;
             }
         }
         return (-1);
@@ -68,7 +75,7 @@ void tescase(vector<int> &nums, int target, int excepted)
 {
     Solution s;
     int result = s.search(nums, target);
-    cout << "result = (" << result << ") excepted = (" << excepted << ")";
+    cout << "result = (" << result << ") excepted = (" << excepted << ")\n\n";
 }
 
 int main()
@@ -78,4 +85,7 @@ int main()
     tescase(nums = {4, 5, 6, 7, 0, 1, 2}, 0, 4);
     tescase(nums = {4, 5, 6, 7, 0, 1, 2}, 3, -1);
     tescase(nums = {1}, 0, -1);
+    tescase(nums = {-1}, -1, 0);
+    tescase(nums = {9, 10, 12, -1, 0, 2, 4, 5, 6, 7}, 6, 8);
+    tescase(nums = {9, 10, 12, -1, 0, 2, 4, 5, 6, 7}, -1, 3);
 }
