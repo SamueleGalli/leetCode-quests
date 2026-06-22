@@ -57,13 +57,24 @@ class Solution
 public:
     bool hasCycle(ListNode *head)
     {
+        ListNode *fast = head;
+        ListNode *slow = head;
+
+        while (fast && fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
+                return (true);
+        }
+        return (false);
     }
 };
 
 ListNode *create_list(vector<int> &nums, ListNode *&head)
 {
     if (nums.empty())
-        return;
+        return (nullptr);
     head = new ListNode(nums[0]);
     ListNode *temp = head;
     for (size_t i = 1; i < nums.size(); i++)
@@ -117,32 +128,33 @@ ListNode *cycle(ListNode *&head, int pos)
     return (temp);
 }
 
-int main()
+void testcase(vector<int> &list, int loop, bool excepted)
 {
     Solution s;
-    vector<int> list;
     ListNode *head = nullptr;
     ListNode *end = nullptr;
-    bool result;
 
-    list = {3, 2, 0, -4};
     end = create_list(list, head);
-    end->next = cycle(head, 1);
-    result = s.hasCycle(head);
+    end->next = cycle(head, loop);
+    if (s.hasCycle(head) == excepted)
+        cout << "Correct result\n";
+    else
+        cout << "Incorrect result\n";
     end->next = nullptr;
     delete_node(head);
+}
 
-    list = {1, 2};
-    end = create_list(list, head);
-    end->next = cycle(head, -1);
-    result = s.hasCycle(head);
-    end->next = nullptr;
-    delete_node(head);
+int main()
+{
+    vector<int> list;
 
-    list = {1};
-    end = create_list(list, head);
-    end->next = cycle(head, 0);
-    result = s.hasCycle(head);
-    end->next = nullptr;
-    delete_node(head);
+    testcase(list = {3, 2, 0, -4}, 1, true);
+
+    testcase(list = {1, 2}, -1, false);
+
+    testcase(list = {1}, 0, true);
+
+    testcase(list = {1}, -1, false);
+
+    testcase(list = {1, 1, 1, 1}, -1, false);
 }
