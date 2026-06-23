@@ -40,24 +40,23 @@ public:
         string s = "122";
         s.reserve(n);
         int one = 1;
-        size_t start = 0;
+        size_t start = 2;
         size_t end = 2;
         while (s.size() < static_cast<size_t>(n))
         {
-            int times = s[end] - '0';
+            int times = s[start] - '0';
             if (static_cast<int>(s.size()) + times > n)
                 times--;
-            if (s[start] == '1')
+            if (s[end] == '1')
+                s.append(times, '2');
+            else
             {
                 s.append(times, '1');
                 one += times;
             }
-            else
-                s.append(times, '2');
             start++;
             end += times;
         }
-        cout << "s = " << s << endl;
         return (one);
     }
 };
@@ -85,6 +84,14 @@ int main()
     cout << "result = " << result << endl;
 
     n = 4;
+    result = s.magicalString(n);
+    cout << "result = " << result << endl;
+
+    n = 7;
+    result = s.magicalString(n);
+    cout << "result = " << result << endl;
+
+    n = 11;
     result = s.magicalString(n);
     cout << "result = " << result << endl;
 }
