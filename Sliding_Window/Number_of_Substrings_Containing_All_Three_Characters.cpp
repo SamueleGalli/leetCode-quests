@@ -49,17 +49,14 @@ public:
         {
             occurences[s[right]]++;
             right++;
-            if (occurences.size() == 3)
+            while (occurences.size() == 3)
             {
-                while (left < right && occurences.size() == 3)
-                {
-                    count += left + 1;
-                    occurences[s[left]]--;
-                    if (occurences[s[left]] == 0)
+                occurences[s[left]]--;
+                if (occurences[s[left]] == 0)
                     occurences.erase(s[left]);
-                    left++;
-                }
+                left++;
             }
+            count += left;
         }
         return (count);
     }
@@ -73,21 +70,21 @@ int main()
 
     sequence = "abcabc";
     result = s.numberOfSubstrings(sequence);
-    cout << "result = " << result << "\n\n";
+    cout << "result = " << result << " == " << "10\n\n";
 
     sequence = "aaacb";
     result = s.numberOfSubstrings(sequence);
-    cout << "result = " << result << "\n\n";
+    cout << "result = " << result << " == " << "3\n\n";
 
     sequence = "abc";
     result = s.numberOfSubstrings(sequence);
-    cout << "result = " << result << "\n\n";
-
-    sequence = "acbbcac";
-    result = s.numberOfSubstrings(sequence);
-    cout << "result = " << result << "\n\n";
+    cout << "result = " << result << " == " << "1\n\n";
 
     sequence = "aaabc";
     result = s.numberOfSubstrings(sequence);
-    cout << "result = " << result << "\n\n";
+    cout << "result = " << result << " == " << "3\n\n";
+
+    sequence = "acbbcac";
+    result = s.numberOfSubstrings(sequence);
+    cout << "result = " << result << " == " << "11\n\n";
 }
