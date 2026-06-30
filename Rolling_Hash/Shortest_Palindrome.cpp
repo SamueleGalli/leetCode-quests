@@ -26,33 +26,32 @@ using namespace std;
 
 #include <iostream>
 #include <algorithm>
-/*
-TODO almost done
-*/
+
 class Solution
 {
+private:
+    int MOD = 1000000007;
+
 public:
     string shortestPalindrome(string s)
     {
         long long order = 0;
         long long inverted = 0;
         long long base = 1;
-        int j = s.size() - 1;
-        size_t start = 0;
-        size_t i = 0;
+        size_t start = s.size();
         string attach;
 
-        while (i < s.size() && j >= 0)
+        for (size_t i = 0; i < s.size(); i++)
         {
-            order = (order * 31) + s[i];
-            inverted = inverted + (base * s[j]);
+            order = ((order * 31) + s[i]) % MOD;
+            inverted = ((base * s[i]) + inverted) % MOD;
             if (inverted == order)
-                start = i;
-            i++;
-            j--;
-            base = base * 31;
+                start = i + 1;
+            base = (base * 31) % MOD;
         }
-        attach = s.substr(start + 1);
+        if (start == 0)
+            return (s);
+        attach = s.substr(start);
         reverse(attach.begin(), attach.end());
         s = attach + s;
         return (s);
