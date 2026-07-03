@@ -41,9 +41,13 @@ Constraints:
 using namespace std;
 
 #include <iostream>
-
+#include <vector>
 /*
-TODO Binary search per cercare prefissi nell'hash
+    suffix = (prefix[i + medium - 1] - (prefix[i - 1] * powers[medium] % MOD + MOD)) % MOD;
+    prova la stringa con la meta destra da i (prefix[i + medium - 1])
+    tolgo la parte d i - 1 dal totale moltiplicando per tolgiere solo l'inzio e non il resto(prefix[i - 1] * powers[medium])
+    es.  1234->1200 e non il "34" che mi serve
+    e infine formatto per evitare out of bound e rendo positivo ((% MOD + MOD) % MOD)
 */
 
 class Solution
@@ -51,29 +55,45 @@ class Solution
 private:
     int MOD = 1000000007;
 
-    long long binary_search(const string &s, size_t i)
+    int binary_search(const string &s, size_t i, const vector<long long> &prefix, const vector<long long> &powers)
     {
-        size_t medium = s.size() / 2;
-        binary_search(s,medium);
+        int medium;
+        int low = 1;
+        int high = static_cast<int>(s.size() - i);
+        int dim = 0;
+
+        while (low <= high)
+        {
+            medium = (low + high) / 2;
+            if (prefix[medium - 1] == (prefix[i + medium - 1] -
+                                       (prefix[i - 1] * powers[medium] % MOD) +
+                                       MOD) %
+                                          MOD)
+            {
+                dim = medium;
+                low = medium + 1;
+            }
+            else
+                high = medium - 1;
+        }
+        return (dim);
     }
 
 public:
     long long sumScores(string s)
     {
-        long long inverted = 0;
-        long long ordered = 0;
-        long long base = 1;
-        long long result = 0;
-        size_t j = s.size() - 1;
+        vector<long long> prefix(s.size(), s[0] % MOD);
+        vector<long long> powers(s.size(), 1);
+        long long result = static_cast<int>(s.size());
 
-        for (size_t i = 0; i < s.size(); i++)
+        for (size_t i = 1; i < s.size(); i++)
         {
-            ordered = ((ordered * 31) + s[i]) % MOD;
-            inverted = ((base * s[j]) + inverted) % MOD;
-            result += binary_search(s, i);
-            j--;
-            base = (base * 31) % MOD;
+            prefix[i] = ((prefix[i - 1] * 31) + s[i]) % MOD;
+            powers[i] = (powers[i - 1] * 31) % MOD;
         }
+
+        for (size_t i = 1; i < s.size(); i++)
+            result += binary_search(s, i, prefix, powers);
         return (result);
     }
 };
