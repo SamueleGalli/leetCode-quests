@@ -37,21 +37,28 @@ Constraints:
 using namespace std;
 
 #include <iostream>
-#include <algorithm>
 
 class Solution
 {
-
 public:
     char findKthBit(int n, int k)
     {
-        int len = 1 << (n - 1);
-        if (k == (len / 2))
+        if (n == 1)
+            return ('0');
+
+        int len = (1 << (n - 1));
+
+        if (k == len)
             return ('1');
-        else if (k < (len / 2))
+        else if (k < len)
             return (findKthBit(n - 1, k));
         else
-
+        {
+            if (findKthBit(n - 1, (len * 2) - k) == '0')
+                return ('1');
+            else
+                return ('0');
+        }
     }
 };
 
