@@ -1,0 +1,62 @@
+Definition of structure used:
+1) Array
+    A data structure with contiguous memory allocation
+    O(1) random access to elements via indices
+
+2) Stack
+    A LIFO (Last-In, First-Out) data structure
+    The last element added is the first one to be removed
+
+3) Monotonic Stack
+    A stack maintained in a specific order: 
+    - Increasing stack: elements are maintained in increasing order
+    - Decreasing stack: elements are maintained in decreasing order
+    work in 0(n) time complexity
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4) Queue
+    There are various type:
+    standard queue: A FIFO (First-In, First-Out) data structure where elements are added to the back and removed from the front
+    deque: a Double-ended queue A queue that allows insertion and removal from both ends
+    priority_queue: A queue where the element with the highest (Max-Heap) or lowest (Min-Heap) priority is always at the front
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5) Linked List
+    A linear data structure where elements are stored in nodes, with each node containing data and a pointer (or reference) to the next node, connected from head to tail
+
+6) Prefix Sum
+    A technique where you create an array to store the cumulative sum of preceding values, allowing you to calculate the sum of any sub-range in O(1) time.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+7) Binary Search
+    An efficient search algorithm for pre-sorted arrays
+    the recursive divise make the algorithm O(log n) time complexity
+
+8) Counting_Sort/Merge_Sort/Quickselect
+    Counting_Sort(sort):
+        Create an array of size equal to the maximum value
+        count and mark every occurrence of the values
+        reconstruct the array using these counts
+    Merge_Sort(sort):
+        Recursively divide the array into halves until single elements are reached
+        merge all portions in order
+    Quickselect(find):
+        Select a pivot
+        partition the array so that smaller elements are on the left and larger elements are on the right
+        discard the "useless" portion and continue until the target element is found.
+
+9) Divide and Conquer
+    It divides the problem like Merge Sort does, resolves the base case, and then works with the small elements obtained to build the final solution
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+10) Sliding Window
+    A technique that uses a range of elements (a "window") that moves across the array to process data efficiently
+
+11) Rolling Hash
+    Converting a string or number into a hash (a fixed-size value) to compare elements much faster.
+
+12)Backtracking
+    A recursive technique that explores potential solutions and "backtracks" (discards) the wrong choices as soon as it determines they cannot lead to a valid result

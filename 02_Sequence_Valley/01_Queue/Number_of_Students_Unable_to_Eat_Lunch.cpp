@@ -47,6 +47,7 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <queue>
 
 class Solution
 {
@@ -54,27 +55,26 @@ public:
     int countStudents(vector<int> &students, vector<int> &sandwiches)
     {
         int count = 0;
-
-        while (sandwiches.size() > 0)
+        size_t j = 0;
+        queue<int> q_s;
+        for (size_t i = 0; i < students.size(); i++)
+            q_s.push(students[i]);
+        while (sandwiches.size() > 0 && q_s.size() > 0)
         {
-            while (students.size() > 0)
+            if (q_s.front() != sandwiches[j])
             {
-                if (students.front() != sandwiches.front())
-                {
-                    students.push_back(students.front());
-                    students.erase(students.begin());
-                }
-                if (students.front() == sandwiches.front())
-                {
-                    students.erase(students.begin());
-                    sandwiches.erase(sandwiches.begin());
-                    break;
-                }
+                q_s.push(q_s.front());
+                q_s.pop();
                 count++;
-                if (count == static_cast<int>(students.size()))
-                    return (count);
             }
-            count = 0;
+            else
+            {
+                q_s.pop();
+                j++;
+                count = 0;
+            }
+            if (count == static_cast<int>(q_s.size()))
+                return (count);
         }
         return (count);
     }
@@ -92,8 +92,8 @@ int main()
     result = s.countStudents(students, sandwiches);
     cout << "numero di studenti che non hanno mangiato = " << result << "\n\n\n";
 
-    students = {1,1,1,0,0,1};
-    sandwiches = {1,0,0,0,1,1};
+    students = {1, 1, 1, 0, 0, 1};
+    sandwiches = {1, 0, 0, 0, 1, 1};
     result = s.countStudents(students, sandwiches);
     cout << "numero di studenti che non hanno mangiato = " << result << "\n\n\n";
 }

@@ -28,21 +28,55 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 class Solution
 {
+private:
+    void create_comb(vector<vector<int>> &result,
+                     const int &n, const int &k,
+                     vector<int> &array, int i = 1)
+    {
+        if (array.size() == static_cast<size_t>(k))
+        {
+            result.push_back(array);
+            return;
+        }
+        for (; i <= n; i++)
+        {
+            array.push_back(i);
+            create_comb(result, n, k, array, i + 1);
+            array.pop_back();
+        }
+    }
+
 public:
     vector<vector<int>> combine(int n, int k)
     {
+        vector<vector<int>> result;
+        vector<int> array;
+        create_comb(result, n, k, array);
+        return (result);
     }
 };
 
-void print_mat(const vector<vector<int>> &result)
+void print_mat(const vector<vector<int>> &result, int k)
 {
-    cout << "result = {";
+    if (result.size() == 0)
+    {
+        cout << "result = {{}};\n";
+        return;
+    }
+    cout << "result = {{";
     for (size_t i = 0; i < result.size(); i++)
     {
-        cout << result[i][0] << ", " << result[i][1] << "}";
+        for (size_t j = 0; j < static_cast<size_t>(k); j++)
+        {
+            cout << result[i][j];
+            if (j + 1 < static_cast<size_t>(k))
+                cout << ", ";
+        }
+        cout << "}";
         if (i + 1 < result.size())
             cout << ", {";
     }
@@ -59,10 +93,20 @@ int main()
     n = 4;
     k = 2;
     result = s.combine(n, k);
-    print_mat(result);
+    print_mat(result, k);
 
     n = 1;
     k = 1;
     result = s.combine(n, k);
-    print_mat(result);
+    print_mat(result, k);
+
+    n = 5;
+    k = 1;
+    result = s.combine(n, k);
+    print_mat(result, k);
+
+    n = 5;
+    k = 3;
+    result = s.combine(n, k);
+    print_mat(result, k);
 }

@@ -119,12 +119,12 @@ int main()
     {
         cout << "------------------------------------------------\n";
         MyQueue *myQueue = new MyQueue();
-        myQueue->push(1);                                // queue is: [1]
-        myQueue->push(2);                                // queue is: [1, 2] (leftmost is front of the queue)
-        cout << "peeking = " << myQueue->peek() << "\n"; // return 1
-        cout << "popping = " << myQueue->pop() << "\n";  // return 1, queue is [2]
+        myQueue->push(1);
+        myQueue->push(2);
+        cout << "peeking = " << myQueue->peek() << "\n";
+        cout << "popping = " << myQueue->pop() << "\n";
         cout << boolalpha << "is empty?\n"
-             << myQueue->empty() << "\n"; // return false
+             << myQueue->empty() << "\n";
         delete myQueue;
     }
 }
