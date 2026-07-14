@@ -26,8 +26,6 @@ Constraints:
 * s consists of digits only.
 */
 
-//TODO Fix it
-
 using namespace std;
 
 #include <iostream>
@@ -36,56 +34,40 @@ using namespace std;
 class Solution
 {
 private:
-    void get_adresses(vector<string> &result, string adress, string ip, const string &s, size_t i = 0, size_t seg = 0)
+    void get_adresses(vector<string> &result, string adress, string &ip, const string &s, size_t i = 0, size_t seg = 0)
     {
+        size_t take_out;
         if (i >= s.size())
         {
             if (i == s.size() && seg == 4)
-            {
-                ip += adress;
-                cout << "pusho in result cio che ho trovato = " << ip << endl;
                 result.push_back(ip);
-                ip.clear();
-            }
             return;
         }
-        if (!adress.empty() && adress.size() <= 3 && stoi(adress) <= 255)
+        for (size_t k = i; k < i + 3 && k < s.size(); k++)
         {
-            cout << "pusho nell'ip = " << adress << "\n\n";
-            ip += adress;
-            if (seg + 1 < 4)
-                ip += '.';
-            cout << "ip = " << ip << endl;
-            seg++;
-            adress.clear();
-            get_adresses(result, adress, ip, s, i + 1, seg);
-        }
-        else if (adress.empty())
-        {
-            for (size_t k = i; k < i + 3 && k < s.size(); k++)
+            adress.push_back(s[k]);
+            if (stoi(adress) <= 255)
             {
-                adress.push_back(s[k]);
-                get_adresses(result, adress, ip, s, k + 1, seg);
+                take_out = ip.size();
+                ip += adress;
+                if (seg + 1 < 4)
+                    ip += '.';
+                get_adresses(result, "", ip, s, k + 1, seg + 1);
+                ip.resize(take_out);
             }
-        }
-        else
-        {
-            adress.clear();
-            get_adresses(result, adress, ip, s, i + 1, seg);
+            if (stoi(adress) == 0)
+                return;
         }
     }
 
 public:
     vector<string> restoreIpAddresses(string s)
     {
-        if (s.size() > 12 || s.size() < 4)
-            return {};
         vector<string> result;
-        string adress;
         string ip;
-        ip.reserve(16);
-        adress.reserve(5);
-        get_adresses(result, adress, ip, s);
+        result.reserve(17);
+        ip.reserve(17);
+        get_adresses(result, "", ip, s);
         return (result);
     }
 };
@@ -112,14 +94,15 @@ int main()
     result = s.restoreIpAddresses(word);
     print_vec(result);
 
-    /*word = "0000";
-   result = s.restoreIpAddresses(word);
-   print_vec(result);
+    word = "0000";
+    result = s.restoreIpAddresses(word);
+    print_vec(result);
 
-   word = "101023";
-   result = s.restoreIpAddresses(word);
-   print_vec(result);
- word = "999999999999";
- result = s.restoreIpAddresses(word);
- print_vec(result);*/
+    word = "101023";
+    result = s.restoreIpAddresses(word);
+    print_vec(result);
+
+    word = "999999999999";
+    result = s.restoreIpAddresses(word);
+    print_vec(result);
 }
