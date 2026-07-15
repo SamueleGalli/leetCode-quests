@@ -60,3 +60,20 @@ Definition of structure used:
 
 12)Backtracking
     A recursive technique that explores potential solutions and "backtracks" (discards) the wrong choices as soon as it determines they cannot lead to a valid result
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+13) Graph
+    A graph is a data structure made of nodes (vertices) and connections between them (edges)
+    It is used to represent relationships between elements
+    It is represented as:
+        G = (V, E)
+    where:
+        - V represents the set of vertices.
+        - E represents the set of edges.
+    There are some helper data structures used with graphs, such as:
+        Union Find (Disjoint Set Union)
+            It uses an indexed array to keep track of the parent of each element.
+            It is used to:            
+            Find: Find the representative of the group containing an element
+            Union: Merge two different groups

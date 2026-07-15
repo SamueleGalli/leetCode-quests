@@ -31,9 +31,29 @@ using namespace std;
 
 class Solution
 {
+private:
+    void get_paths(vector<vector<int>> &result, const vector<vector<int>> &graph,
+                   size_t i, vector<int> paths)
+    {
+        if (paths.back() == static_cast<int>(graph.size()) - 1)
+        {
+            result.push_back(paths);
+            return;
+        }
+        for (size_t j = 0; j < graph[i].size(); j++)
+        {
+            paths.push_back(graph[i][j]);
+            get_paths(result, graph, graph[i][j], paths);
+            paths.pop_back();
+        }
+    }
+
 public:
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>> &graph)
     {
+        vector<vector<int>> result;
+        get_paths(result, graph, 0, {0});
+        return (result);
     }
 };
 
@@ -45,7 +65,7 @@ void print_result(const vector<vector<int>> &result)
         cout << "{";
         for (size_t j = 0; j < result[i].size(); j++)
         {
-            cout << "result[" << i << "][" << j << "] = " << result[i][j];
+            cout << result[i][j];
             if (j + 1 < result[i].size())
                 cout << ", ";
         }
@@ -53,7 +73,7 @@ void print_result(const vector<vector<int>> &result)
         if (i + 1 < result.size())
             cout << ", ";
     }
-    cout << "}";
+    cout << "}\n\n\n";
 }
 
 int main()
@@ -66,5 +86,11 @@ int main()
     print_result(result);
 
     result = s.allPathsSourceTarget(graph = {{4, 3, 1}, {3, 2, 4}, {3}, {4}, {}});
+    print_result(result);
+
+    result = s.allPathsSourceTarget(graph = {{4, 3, 1}, {3, 2, 4}, {}, {4}, {}});
+    print_result(result);
+
+    result = s.allPathsSourceTarget(graph = {{2}, {}, {1}});
     print_result(result);
 }

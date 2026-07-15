@@ -43,9 +43,53 @@ struct ListNode
 
 class Solution
 {
+private:
+    ListNode *med_point(ListNode *temp)
+    {
+        ListNode *fast = temp;
+        ListNode *slow = temp;
+
+        while (fast->next && fast->next->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return (slow->next);
+    }
+
+    ListNode *invert(ListNode *temp)
+    {
+        ListNode *next = nullptr;
+        ListNode *prev = nullptr;
+
+        while (temp)
+        {
+            next = temp->next;
+            temp->next = prev;
+            prev = temp;
+            temp = next;
+        }
+        return (prev);
+    }
+
 public:
     void reorderList(ListNode *head)
     {
+        ListNode *temp = head;
+        ListNode *mid = invert(med_point(temp));
+        ListNode *next_temp = nullptr;
+        ListNode *next_mid = nullptr;
+
+        while (mid && temp)
+        {
+            next_mid = mid->next;
+            next_temp = temp->next;
+            temp->next = mid;
+            mid->next = next_temp;
+            temp = next_temp;
+            mid = next_mid;
+        }
+        temp->next = nullptr;
     }
 };
 
