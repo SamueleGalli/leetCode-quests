@@ -44,44 +44,60 @@ private:
         return (union_find[index]);
     }
 
-public:
-    int longestConsecutive(vector<int> &nums)
+    void allocator(const vector<int> &nums, unordered_map<int, size_t> &finder,
+                   vector<int> &count, vector<int> &union_find)
     {
-        vector<int> union_find(nums.size());
-        vector<int> count;
-        unordered_map<int, size_t> finder(nums.size());
-        int max_count = 0;
-        int r_current = 0;
-        int r_next = 0;
+        finder.reserve(nums.size());
+        count.reserve(nums.size());
+        union_find.reserve(nums.size());
 
-        count.resize(nums.size(), 1);
-
-        iota(union_find.begin(), union_find.end(), 0);
         for (size_t i = 0; i < nums.size(); i++)
         {
             if (!finder.count(nums[i]))
-                finder[nums[i]] = i;
-        }
-
-        for (size_t i = 0; i < nums.size(); i++)
-        {
-            if (finder.count(nums[i] + 1))
             {
-                r_current = find_element(union_find, i);
-                r_next = find_element(union_find, finder[nums[i] + 1]);
-                max_count = max(max_count, count[r_next] + count[r_current]);
-
-                if (count[r_current] >= count[r_next])
-                {
-                    union_find[r_next] = union_find[r_current];
-                    count[r_current] += count[r_next];
-                }
-                else
-                {
-                    union_find[r_current] = union_find[r_next];
-                    count[r_next] += count[r_current];
-                }
+                count.push_back(1);
+                finder[nums[i]] = union_find.size();
+                union_find.push_back(union_find.size());
             }
+        }
+    }
+
+    void union_find_function(vector<int> &count, vector<int> &union_find,
+        int &max_count, const size_t &current, const size_t &it_next)
+    {
+        size_t r_current = find_element(union_find, current);
+        size_t r_next = find_element(union_find, it_next);
+        max_count = max(max_count, count[r_next] + count[r_current]);
+        if (count[r_current] >= count[r_next])
+        {
+            union_find[r_next] = r_current;
+            count[r_current] += count[r_next];
+        }
+        else
+        {
+            union_find[r_current] = r_next;
+            count[r_next] += count[r_current];
+        }
+    }
+
+public:
+    int longestConsecutive(vector<int> &nums)
+    {
+        vector<int> union_find;
+        vector<int> count;
+        unordered_map<int, size_t> finder;
+        unordered_map<int, size_t>::iterator it_next;
+        int max_count = 0;
+
+        allocator(nums, finder, count, union_find);
+
+        for (pair<const int, size_t> &value : finder)
+        {
+            it_next = finder.find(value.first + 1);
+            if (it_next != finder.end())
+                union_find_function(count, union_find, max_count, value.second, it_next->second);
+            else
+                max_count = max(max_count, 1);
         }
         return (max_count);
     }
@@ -102,6 +118,14 @@ int main()
     cout << "result = " << result << endl;
 
     nums = {1, 0, 1, 2};
+    result = s.longestConsecutive(nums);
+    cout << "result = " << result << endl;
+
+    nums = {1};
+    result = s.longestConsecutive(nums);
+    cout << "result = " << result << endl;
+
+    nums = {};
     result = s.longestConsecutive(nums);
     cout << "result = " << result << endl;
 }
