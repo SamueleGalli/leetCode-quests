@@ -32,7 +32,6 @@ using namespace std;
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
-#include <numeric>
 
 class Solution
 {
