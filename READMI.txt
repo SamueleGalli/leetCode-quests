@@ -77,3 +77,10 @@ Definition of structure used:
             It is used to:            
             Find: Find the representative of the group containing an element
             Union: Merge two different groups
+            Each element starts as an independent set, therefore a size array is often initialized with 1
+            Additional optimizations:
+                - Path Compression reduces the tree depth during Find
+                - Union by Size/Rank keeps trees balanced
+            When elements cannot be directly used as array indexes (for example large values, arbitrary values, or values represented by other objects),
+            a map can be used to convert them into indexes for the DSU arrays
+            A size vector can then be used to track the number of elements in each connected component and retrieve the largest component
