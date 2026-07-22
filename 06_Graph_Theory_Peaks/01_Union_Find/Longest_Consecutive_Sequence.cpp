@@ -55,7 +55,7 @@ private:
             if (!finder.count(nums[i]))
             {
                 count.push_back(1);
-                finder[nums[i]] = union_find.size();
+                finder[nums[i]] = i;
                 union_find.push_back(union_find.size());
             }
         }

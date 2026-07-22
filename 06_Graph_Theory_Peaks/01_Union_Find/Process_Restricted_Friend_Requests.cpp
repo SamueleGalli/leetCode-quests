@@ -70,15 +70,12 @@ public:
     vector<bool> friendRequests(int n, vector<vector<int>> &restrictions, vector<vector<int>> &requests)
     {
         vector<int> union_find(n);
-        vector<bool> result(requests.size());
+        vector<bool> result(n - 1);
         int friend_x = 0;
         int friend_y = 0;
         int restrict_x = 0;
         int restrict_y = 0;
         bool state = true;
-
-        union_find.reserve(n);
-        result.reserve(n - 1);
 
         for (int i = 0; i < n; i++)
             union_find[i] = i;

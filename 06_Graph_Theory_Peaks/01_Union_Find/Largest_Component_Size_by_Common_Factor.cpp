@@ -108,10 +108,6 @@ public:
         vector<int> all_size(nums.size(), 1);
         int max_size = 1;
 
-        all_size.reserve(nums.size());
-        union_find.reserve(nums.size());
-        find_me.reserve(nums.size());
-
         for (size_t i = 0; i < nums.size(); i++)
             union_find[i] = i;
             
