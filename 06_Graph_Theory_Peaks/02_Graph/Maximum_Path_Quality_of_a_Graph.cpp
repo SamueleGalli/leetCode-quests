@@ -49,15 +49,71 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
-#include <unordered_set>
+#include <unordered_map>
+#include <algorithm>
+
+//TODO da ottimizzare e rendere comprensibile
 
 class Solution
 {
+    unordered_map<int, vector<pair<int, int>>> graph;
+    /* vector<int> path_time; */
+    int tot_sum = 0;
+    int max_time = 0;
+
+private:
+    void take_paths(vector<int> &values, int time = 0, int sum = 0, int i = 0)
+    {
+       /*  if (time + path_time[i] > max_time)
+            return; */
+        if (i == 0)
+            tot_sum = max(tot_sum, sum + values[i]);
+        for (size_t j = 0; j < graph[i].size(); j++)
+        {
+            pair<int, int> node_time = graph[i][j];
+            if (time + node_time.second > max_time)
+                continue;
+            int curr_sum = values[i];
+            values[i] = 0;
+            take_paths(values, path_time, time + node_time.second, sum + curr_sum, node_time.first);
+            values[i] = curr_sum;
+        }
+    }
+
+    void set_value(void)
+    {
+   /*      vector<int> path_time(values.size());
+        vector<int> to_go(1); */
+        
+        for (size_t i = 0; i < edges.size(); i++)
+        {
+            graph[edges[i][0]].push_back({edges[i][1], edges[i][2]});
+            graph[edges[i][1]].push_back({edges[i][0], edges[i][2]});
+        }
+   /*      path_time[0] = 0;
+        for (size_t i = 0;i < to_go.size();i++)
+        {
+            for (size_t num_node = 0;num_node < to_go.size();num_node++)
+            {
+                path_time[to_go[num_node]] = path_time[to_go[num_node]] + graph[to_go[num_node]].second;
+                to_go.erase(to_go.begin() + i);
+                to_go.push_back(node.first);
+            }
+        } */
+    }
+
 public:
     int maximalPathQuality(vector<int> &values, vector<vector<int>> &edges, int maxTime)
     {
-        int result;
+        graph.clear();
+        path_time.clear();
+        tot_sum = 0;
+        max_time = maxTime;
 
+        set_value();
+
+        take_paths(values);
+        return (tot_sum);
     }
 };
 
@@ -77,4 +133,5 @@ int main()
     testcase(values = {0, 32, 10, 43}, edges = {{0, 1, 10}, {1, 2, 15}, {0, 3, 10}}, 49);
     testcase(values = {5, 10, 15, 20}, edges = {{0, 1, 10}, {1, 2, 10}, {0, 3, 10}}, 30);
     testcase(values = {1, 2, 3, 4}, edges = {{0, 1, 10}, {1, 2, 11}, {2, 3, 12}, {1, 3, 13}}, 50);
+    testcase(values = {39, 73, 63, 17}, edges = {{0, 1, 61}, {1, 2, 13}, {2, 3, 44}, {0, 3, 11}}, 10);
 }
