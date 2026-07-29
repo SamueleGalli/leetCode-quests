@@ -84,3 +84,13 @@ Definition of structure used:
             When elements cannot be directly used as array indexes (for example large values, arbitrary values, or values represented by other objects),
             a map can be used to convert them into indexes for the DSU arrays
             A size vector can then be used to track the number of elements in each connected component and retrieve the largest component
+
+14) DFS (Depth First Search)
+    recursion-based traversal that goes to the deepest node possible, then backtracks to explore remaining branches.
+
+
+Extra:
+- Lambda: anonymous function used to customize existing algorithms
+    In comparator functions:
+        - return true  -> keep the current order (no swap)
+        - return false -> elements are in the wrong order (swap)

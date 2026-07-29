@@ -51,55 +51,63 @@ using namespace std;
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
-
-//TODO da ottimizzare e rendere comprensibile
+#include <queue>
 
 class Solution
 {
-    unordered_map<int, vector<pair<int, int>>> graph;
-    /* vector<int> path_time; */
-    int tot_sum = 0;
-    int max_time = 0;
 
 private:
+    unordered_map<int, vector<pair<int, int>>> graph;
+    vector<int> path_time;
+    int tot_sum = 0;
+    int max_time = 0;
     void take_paths(vector<int> &values, int time = 0, int sum = 0, int i = 0)
     {
-       /*  if (time + path_time[i] > max_time)
-            return; */
+        if (time + path_time[i] > max_time)
+            return;
         if (i == 0)
             tot_sum = max(tot_sum, sum + values[i]);
         for (size_t j = 0; j < graph[i].size(); j++)
         {
             pair<int, int> node_time = graph[i][j];
-            if (time + node_time.second > max_time)
+            if (time + node_time.first > max_time)
                 continue;
             int curr_sum = values[i];
             values[i] = 0;
-            take_paths(values, path_time, time + node_time.second, sum + curr_sum, node_time.first);
+            take_paths(values, time + node_time.first, sum + curr_sum, node_time.second);
             values[i] = curr_sum;
         }
     }
 
-    void set_value(void)
+    void set_value(vector<vector<int>> &edges, const size_t &dim)
     {
-   /*      vector<int> path_time(values.size());
-        vector<int> to_go(1); */
-        
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> list;
+        int time;
+        pair<int, int> node;
+
+        path_time.resize(dim, 101);
+        list.push({0, 0});
+        path_time[0] = 0;
+
         for (size_t i = 0; i < edges.size(); i++)
         {
-            graph[edges[i][0]].push_back({edges[i][1], edges[i][2]});
-            graph[edges[i][1]].push_back({edges[i][0], edges[i][2]});
+            graph[edges[i][0]].push_back({edges[i][2], edges[i][1]});
+            graph[edges[i][1]].push_back({edges[i][2], edges[i][0]});
         }
-   /*      path_time[0] = 0;
-        for (size_t i = 0;i < to_go.size();i++)
+        while (!list.empty())
         {
-            for (size_t num_node = 0;num_node < to_go.size();num_node++)
+            node = list.top();
+            list.pop();
+            for (pair<const int, int> to_push : graph[node.second])
             {
-                path_time[to_go[num_node]] = path_time[to_go[num_node]] + graph[to_go[num_node]].second;
-                to_go.erase(to_go.begin() + i);
-                to_go.push_back(node.first);
+                time = path_time[node.second] + to_push.first;
+                if (time < path_time[to_push.second])
+                {
+                    path_time[to_push.second] = time;
+                    list.push(to_push);
+                }
             }
-        } */
+        }
     }
 
 public:
@@ -110,7 +118,7 @@ public:
         tot_sum = 0;
         max_time = maxTime;
 
-        set_value();
+        set_value(edges, values.size());
 
         take_paths(values);
         return (tot_sum);
