@@ -28,8 +28,6 @@ Constraints:
 * There are no repeated edges.
 */
 
-//TODO trovare n - 1 collegamenti e verificare
-
 using namespace std;
 
 #include <iostream>
@@ -38,39 +36,69 @@ using namespace std;
 class Solution
 {
 private:
-    bool find_loop(vector<vector<int>> &graph, int &step, int start, int to_go = 0)
+    vector<char> visited;
+    vector<vector<int>> graph;
+    vector<int> nodes;
+
+    void find_loop(int i)
     {
-        step++;
-        for (int value : graph[start])
+        if (visited[i] != 1)
         {
-            if (start != value)
+            visited[i] = 1;
+            for (int value : graph[i])
             {
-                to_go = start;
-                break;
+                if (visited[value] == 0)
+                {
+                    nodes.push_back(value);
+                    find_loop(value);
+                }
             }
         }
-        find_loop(start, graph, step);
     }
 
-public:
-    int countCompleteComponents(int n, vector<vector<int>> &edges)
+    void alloc_all(vector<vector<int>> &edges, int n)
     {
-        vector<vector<int>> graph(n);
-        int step = 0;
-        int result = 0;
+        graph.clear();
+        nodes.clear();
+        visited.clear();
+        graph.resize(n);
+        visited.resize(n, 0);
+        nodes.reserve(n);
 
         for (size_t i = 0; i < edges.size(); i++)
         {
             graph[edges[i][0]].push_back(edges[i][1]);
             graph[edges[i][1]].push_back(edges[i][0]);
         }
+    }
+
+    bool check_validity(void)
+    {
+        for (size_t i = 0; i < nodes.size(); i++)
+        {
+            if (graph[nodes[i]].size() != nodes.size() - 1)
+                return (false);
+        }
+        return (true);
+    }
+
+public:
+    int countCompleteComponents(int n, vector<vector<int>> &edges)
+    {
+        int result = 0;
+
+        alloc_all(edges, n);
 
         for (size_t i = 0; i < graph.size(); i++)
         {
-            if (find_loop(graph, step, i))
-                result++;
-            i += step;
-            step = 0;
+            if (visited[i] == 0)
+            {
+                nodes.push_back(i);
+                find_loop(i);
+                if (check_validity())
+                    result++;
+                nodes.clear();
+            }
         }
         return (result);
     }
@@ -94,4 +122,7 @@ int main()
 
     edges = {{0, 1}, {0, 2}, {1, 2}, {3, 4}, {3, 5}};
     testcase(6, edges);
+
+    edges = {{9, 15}, {4, 9}, {0, 4}, {3, 4}, {8, 9}, {6, 4}, {12, 15}, {13, 8}, {3, 13}, {9, 6}, {2, 5}, {2, 10}, {2, 11}, {2, 7}, {2, 14}, {5, 10}, {5, 11}, {5, 7}, {5, 14}, {10, 11}, {10, 7}, {10, 14}, {11, 7}, {11, 14}, {7, 14}};
+    testcase(16, edges);
 }
