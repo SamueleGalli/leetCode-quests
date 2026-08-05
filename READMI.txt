@@ -88,6 +88,12 @@ Definition of structure used:
 14) DFS (Depth First Search)
     recursion-based traversal that goes to the deepest node possible, then backtracks to explore remaining branches.
 
+15) BFS (Breadth-First Search)
+    is a graph traversal algorithm that explores nodes level by level
+    It starts from a source node, uses a queue (FIFO) to keep track of nodes to visit,
+    and visits all unvisited neighbors before moving to the next level
+    BFS is commonly used to find the shortest path in an unweighted graph and runs in O(V + E) time
+
 
 Extra:
 - Lambda: anonymous function used to customize existing algorithms
