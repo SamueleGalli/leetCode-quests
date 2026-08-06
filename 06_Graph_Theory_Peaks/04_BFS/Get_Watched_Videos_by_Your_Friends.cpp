@@ -47,10 +47,9 @@ using namespace std;
 class Solution
 {
 private:
-    vector<int> visited;
     queue<int> go_to;
 
-    void explore_nodes(const vector<vector<int>> &friends)
+    void explore_nodes(const vector<vector<int>> &friends, vector<int> &visited)
     {
         size_t size_queue = go_to.size();
         for (size_t to_pop = 0; to_pop < size_queue; to_pop++)
@@ -58,19 +57,21 @@ private:
             int i = go_to.front();
             for (size_t j = 0; j < friends[i].size(); j++)
             {
-                if (visited[friends[i][j]] == 0)
+                int node = friends[i][j];
+                if (visited[node] == 0)
                 {
-                    go_to.push(friends[i][j]);
-                    visited[friends[i][j]] = 1;
+                    go_to.push(node);
+                    visited[node] = 1;
                 }
             }
             go_to.pop();
         }
     }
 
-    vector<int> distance_friends(int &id, const int level, const vector<vector<int>> &friends)
+    vector<int> distance_friends(const vector<vector<int>> &friends, vector<int> &visited,
+                                 const int level, int start = 0)
     {
-        if (id == level)
+        if (start == level)
         {
             vector<int> friend_found;
             while (!go_to.empty())
@@ -80,50 +81,51 @@ private:
             }
             return (friend_found);
         }
-        explore_nodes(friends);
-        id++;
-        return (distance_friends(id, level, friends));
+        explore_nodes(friends, visited);
+        return (distance_friends(friends, visited, level, start + 1));
     }
 
-    void set_all(int &id, vector<vector<int>> &friends)
+    vector<string> give_result(vector<int> &list_video, vector<vector<string>> &watchedVideos)
     {
-        visited.clear();
-        visited.resize(friends.size(), 0);
-        visited[id] = 1;
-
-        while (!go_to.empty())
-            go_to.pop();
-        go_to.push(id);
-    }
-
-public:
-    vector<string> watchedVideosByFriends(vector<vector<string>> &watchedVideos, vector<vector<int>> &friends, int id, int level)
-    {
-        vector<string> result;
         unordered_map<string, int> video;
-        int start = 0;
+        vector<string> result;
 
-        set_all(id, friends);
-        vector<int> list_video = distance_friends(start, level, friends);
-
-        for (int i : list_video)
+        for (int list : list_video)
         {
-            for (string j : watchedVideos[i])
-                video[j]++;
+            for (string &watched : watchedVideos[list])
+                video[watched]++;
         }
 
         vector<pair<string, int>> temp(video.begin(), video.end());
         sort(temp.begin(), temp.end(), [](const pair<string, int> &a, const pair<string, int> &b)
-             {
+        {
             if (a.second != b.second)
                 return (a.second < b.second);
-            return (a.second < b.second); });
+            return (a.first < b.first);
+        });
 
         for (pair<string, int> &to_watch : temp)
             result.push_back(to_watch.first);
         return (result);
     }
+
+public:
+    vector<string> watchedVideosByFriends(vector<vector<string>> &watchedVideos, vector<vector<int>> &friends, int id, int level)
+    {
+        vector<int> visited(friends.size(), 0);
+
+        visited[id] = 1;
+        while (!go_to.empty())
+            go_to.pop();
+        go_to.push(id);
+
+        vector<int> list_video = distance_friends(friends, visited, level);
+
+        return (give_result(list_video, watchedVideos));
+    }
 };
+
+
 
 void testcase(vector<vector<string>> &watchedVideos, vector<vector<int>> &friends, int id, int level)
 {
