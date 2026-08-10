@@ -100,3 +100,7 @@ Extra:
     In comparator functions:
         - return true  -> keep the current order (no swap)
         - return false -> elements are in the wrong order (swap)
+
+- Dijkstra
+    finds the shortest path from a starting node to all other nodes in a weighted graph with non-negative edge weights
+    It always explores the node with the smallest known distance and updates the distances of its neighbors if a shorter path is found
