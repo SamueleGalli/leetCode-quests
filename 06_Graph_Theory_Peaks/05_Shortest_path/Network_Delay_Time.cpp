@@ -69,8 +69,6 @@ private:
     {
         graph.clear();
         dimension.clear();
-        while (!node_to_see.empty())
-            node_to_see.pop();
 
         for (const vector<int> &node : times)
             graph[node[0]].push_back({node[2], node[1]});
@@ -87,10 +85,12 @@ public:
         short_time();
 
         for (size_t i = 1; i < dimension.size(); i++)
+        {
+            if (dimension[i] == max_int)
+                return (-1);
             result = max(result, dimension[i]);
+        }
 
-        if (result == max_int)
-            result = -1;
         return (result);
     }
 };

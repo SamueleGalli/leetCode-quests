@@ -37,12 +37,90 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <unordered_map>
+#include <limits>
+#include <algorithm>
 
 class Solution
 {
+private:
+    priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<pair<long long, int>>> list_nodes;
+    vector<vector<pair<int, int>>> graph;
+    long long max_int = numeric_limits<long long>::max();
+
+    void shortest_path(vector<long long> &dim)
+    {
+        while (!list_nodes.empty())
+        {
+            const pair<long long, int> top_node = list_nodes.top();
+            list_nodes.pop();
+            if (top_node.first > dim[top_node.second])
+                continue;
+            for (const pair<int, int> &node : graph[top_node.second])
+            {
+                long long sum = static_cast<long long>(node.first) + top_node.first;
+                if (sum < dim[node.second])
+                {
+                    dim[node.second] = sum;
+                    list_nodes.push({sum, node.second});
+                }
+            }
+        }
+    }
+
+    void setting_up(vector<vector<int>> &edges, const int &src1, const int &n)
+    {
+        graph.clear();
+        graph.resize(n);
+        for (size_t i = 0; i < edges.size(); i++)
+            graph[edges[i][0]].push_back({edges[i][2], edges[i][1]});
+        list_nodes.push({0, src1});
+    }
+
+    void invert_graph(vector<vector<int>> &edges, const int &dest, const int &n)
+    {
+        graph.clear();
+        graph.resize(n);
+        for (size_t i = 0; i < edges.size(); i++)
+            graph[edges[i][1]].push_back({edges[i][2], edges[i][0]});
+        list_nodes.push({0, dest});
+    }
+
+    long long get_result(const vector<long long> &dim, const vector<long long> dim2,
+                         const vector<long long> &dim3)
+    {
+        long long result = max_int;
+
+        for (size_t i = 0; i < dim.size(); i++)
+        {
+            if (dim[i] == max_int || dim2[i] == max_int || dim3[i] == max_int)
+                continue;
+            result = min(dim[i] + dim2[i] + dim3[i], result);
+        }
+        if (result == max_int)
+            return (-1);
+        return (result);
+    }
+
 public:
     long long minimumWeight(int n, vector<vector<int>> &edges, int src1, int src2, int dest)
     {
+        vector<long long> dim(n, max_int);
+        vector<long long> dim2(n, max_int);
+        vector<long long> dim3(n, max_int);
+
+        dim[src1] = 0;
+        dim2[src2] = 0;
+        dim3[dest] = 0;
+        setting_up(edges, src1, n);
+        shortest_path(dim);
+        list_nodes.push({0, src2});
+        shortest_path(dim2);
+        invert_graph(edges, dest, n);
+        shortest_path(dim3);
+
+        return (get_result(dim, dim2, dim3));
     }
 };
 
