@@ -94,6 +94,9 @@ Definition of structure used:
     and visits all unvisited neighbors before moving to the next level
     BFS is commonly used to find the shortest path in an unweighted graph and runs in O(V + E) time
 
+16) Binary Tree
+    
+
 
 Extra:
 - Lambda: anonymous function used to customize existing algorithms
