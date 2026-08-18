@@ -95,8 +95,29 @@ Definition of structure used:
     BFS is commonly used to find the shortest path in an unweighted graph and runs in O(V + E) time
 
 16) Binary Tree
-    
-
+    A tree data structure made of nodes.
+    Each node can have at most 2 children (left and right).
+    The first node is called the root.
+    A node without children is called a leaf.
+    Example:
+             1
+            / \
+           2   3
+          / \
+         4   5
+    There are three ways of traversing them:
+        - Pre-order:
+            (ROOT → LEFT → RIGHT)
+            Example:
+                1 → 2 → 4 → 5 → 3
+        - In-order:
+            (LEFT → ROOT → RIGHT)
+            Example:
+                4 → 2 → 5 → 1 → 3
+        - Post-order:
+            (LEFT → RIGHT → ROOT)
+            Example:
+                4 → 5 → 2 → 3 → 1
 
 Extra:
 - Lambda: anonymous function used to customize existing algorithms
