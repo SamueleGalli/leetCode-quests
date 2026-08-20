@@ -119,6 +119,16 @@ Definition of structure used:
             Example:
                 4 → 5 → 2 → 3 → 1
 
+       A Binary Tree can have different specializations:
+        Binary Search Tree (BST):
+            A binary tree where:
+                LEFT < ROOT < RIGHT
+                This allows efficient searching, insertion and deletion
+
+        Segment Tree:
+            A binary tree that represents ranges of an array,used to efficiently perform range queries such as sums, minimums, or maximums
+        
+
 Extra:
 - Lambda: anonymous function used to customize existing algorithms
     In comparator functions:
