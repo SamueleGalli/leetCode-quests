@@ -40,13 +40,73 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 class Solution
 {
+    vector<int> Segment_Tree;
+
+    int check_union(const int &max_heights, const int &index, pair<int, int> range, int Treenode = 1)
+    {
+        if (range.first == range.second)
+            return (max_heights < Segment_Tree[Treenode] ? range.first : -1);
+
+        int mid = (range.first + range.second) / 2;
+        int left = Treenode * 2;
+
+        if (mid <= index)
+            return (check_union(max_heights, index, {mid + 1, range.second}, left + 1));
+        else if (max_heights < Segment_Tree[left])
+        {
+            int result = check_union(max_heights, index, {range.first, mid}, left);
+            if (result != -1)
+                return (result);
+            return (check_union(max_heights, index, {mid + 1, range.second}, left + 1));
+        }
+        else
+            return (check_union(max_heights, index, {mid + 1, range.second}, left + 1));
+    }
+
+    int set_seg_tree(const vector<int> &heights, pair<int, int> range, int Treenode = 1)
+    {
+        if (range.first == range.second)
+            return (Segment_Tree[Treenode] = heights[range.first]);
+
+        int mid = (range.first + range.second) / 2;
+        int left = Treenode * 2;
+        Segment_Tree[left] = set_seg_tree(heights, {range.first, mid}, left);
+        Segment_Tree[left + 1] = set_seg_tree(heights, {mid + 1, range.second}, left + 1);
+        return (Segment_Tree[Treenode] = max(Segment_Tree[left], Segment_Tree[left + 1]));
+    }
+
+    vector<int> &get_result(vector<int> &ans, const vector<int> &heights,
+                            const vector<vector<int>> &queries, pair<int, int> index = {})
+    {
+        for (size_t i = 0; i < queries.size(); i++)
+        {
+            index.second = max(queries[i][0], queries[i][1]);
+            index.first = min(queries[i][0], queries[i][1]);
+            int max_heights = max(heights[queries[i][0]], heights[queries[i][1]]);
+
+            if ((heights[index.first] < heights[index.second]) ||
+                (index.second == index.first))
+                ans[i] = index.second;
+            else
+                ans[i] = check_union(max_heights, index.second, {0, static_cast<int>(heights.size() - 1)});
+        }
+        return (ans);
+    }
+
 public:
     vector<int> leftmostBuildingQueries(vector<int> &heights, vector<vector<int>> &queries)
     {
         vector<int> ans(queries.size());
+
+        Segment_Tree.clear();
+        Segment_Tree.resize((heights.size()) * 4, 0);
+        set_seg_tree(heights, {0, static_cast<int>(heights.size() - 1)});
+
+        return (get_result(ans, heights, queries));
     }
 };
 
@@ -76,6 +136,11 @@ int main()
 
     heights = {5, 3, 8, 2, 6, 1, 4, 6};
     queries = {{0, 7}, {3, 5}, {5, 2}, {3, 0}, {1, 6}};
+    result = s.leftmostBuildingQueries(heights, queries);
+    print_result(result);
+
+    heights = {1};
+    queries = {{0, 0}};
     result = s.leftmostBuildingQueries(heights, queries);
     print_result(result);
 }

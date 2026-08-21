@@ -43,21 +43,15 @@ private:
     int create_tree(const vector<int> &nums, pair<int, int> range, int index = 1)
     {
         if (range.first == range.second)
-        {
-            SegementTree[index] = nums[range.first];
-            return (SegementTree[index]);
-        }
+            return (SegementTree[index] = nums[range.first]);
 
         int mid = (range.first + range.second) / 2;
-        int left_index = index * 2;
-        int right_index = index * 2 + 1;
+        int left = index * 2;
 
-        SegementTree[left_index] = create_tree(nums, {range.first, mid}, index * 2);
-        SegementTree[right_index] = create_tree(nums, {mid + 1, range.second}, index * 2 + 1);
+        SegementTree[left] = create_tree(nums, {range.first, mid}, left);
+        SegementTree[left + 1] = create_tree(nums, {mid + 1, range.second}, left + 1);
 
-        SegementTree[index] = SegementTree[left_index] + SegementTree[right_index];
-
-        return (SegementTree[index]);
+        return (SegementTree[index] = SegementTree[left] + SegementTree[left + 1]);
     }
 
     void update_node(int &index, int &val, pair<int, int> range, int treeindex = 1)
@@ -69,30 +63,28 @@ private:
         }
 
         int mid = (range.first + range.second) / 2;
-        int left_node = treeindex * 2;
-        int right_node = (treeindex * 2) + 1;
+        int left = treeindex * 2;
         if (index <= mid)
-            update_node(index, val, {range.first, mid}, left_node);
+            update_node(index, val, {range.first, mid}, left);
         else
-            update_node(index, val, {mid + 1, range.second}, right_node);
-        SegementTree[treeindex] = SegementTree[left_node] + SegementTree[right_node];
+            update_node(index, val, {mid + 1, range.second}, left + 1);
+        SegementTree[treeindex] = SegementTree[left] + SegementTree[left + 1];
     }
 
     int give_total(int &left, int &right, pair<int, int> range, int Treenode = 1)
     {
         int mid = (range.first + range.second) / 2;
-        int result = 0;
+        int left_index = Treenode * 2;
 
         if (range.first >= left && range.second <= right)
-            result += SegementTree[Treenode];
+            return (SegementTree[Treenode]);
         else if (range.second < left || range.first > right)
-            result += 0;
+            return (0);
         else
         {
-            result += give_total(left, right, {range.first, mid}, (Treenode * 2));
-            result += give_total(left, right, {mid + 1, range.second}, (Treenode * 2) + 1);
+            return (give_total(left, right, {range.first, mid}, left_index) +
+                    give_total(left, right, {mid + 1, range.second}, left_index + 1));
         }
-        return (result);
     }
 
 public:
