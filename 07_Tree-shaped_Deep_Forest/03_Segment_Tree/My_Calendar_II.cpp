@@ -42,14 +42,15 @@ using namespace std;
 class MyCalendarTwo
 {
 private:
-    class node
+    /*class node
     {
         int count;
         node *left;
         node *right;
     };
 
-    vector<node> Segment_Tree;
+    vector<node> Segment_Tree;*/
+    vector<int> Segment_Tree;
     vector<int> reset;
 
     bool clean_and_exit(void)
