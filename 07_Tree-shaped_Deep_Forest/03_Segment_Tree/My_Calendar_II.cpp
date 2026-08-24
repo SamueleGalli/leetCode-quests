@@ -28,68 +28,118 @@ Example 1:
 
 Constraints:
 
-* 0 <= start < end <= 109
+* 0 <= start < end <= 10^9
 * At most 1000 calls will be made to book.
 */
-
-// TODO ottimizzare struttura o con nodi o altri e capire come fare.(Codice funziona in teoria ma lento e inefficiente)
 
 using namespace std;
 
 #include <iostream>
 #include <vector>
 
+class Node
+{
+    friend class MyCalendarTwo;
+
+private:
+    pair<long, long> range;
+    int count;
+    Node *L;
+    Node *R;
+
+public:
+    Node() : range({0, 1000000000}), count(0), L(nullptr), R(nullptr)
+    {
+    }
+    Node(pair<long, long> range, int count) : range(range), count(count), L(nullptr), R(nullptr)
+    {
+    }
+};
+
 class MyCalendarTwo
 {
 private:
-    /*class node
-    {
-        int count;
-        node *left;
-        node *right;
-    };
+    Node *root;
+    vector<Node *> reset;
 
-    vector<node> Segment_Tree;*/
-    vector<int> Segment_Tree;
-    vector<int> reset;
+    void delete_tree(Node *&root)
+    {
+        if (!root)
+            return;
+        delete_tree(root->L);
+        delete_tree(root->R);
+        delete (root);
+        root = nullptr;
+    }
 
     bool clean_and_exit(void)
     {
-        for (int node : reset)
-            Segment_Tree[node]--;
+        for (Node *&node : reset)
+            node->count--;
+
+        reset.clear();
+
         return (false);
     }
 
-    bool range_found(int Treenode)
+    int help_check(const pair<long, long> &range, const pair<int, int> &time, const long &mid)
     {
-        if (Segment_Tree[Treenode] <= 1)
-        {
-            reset.push_back(Treenode);
-            Segment_Tree[Treenode]++;
-        }
+        if (range.first >= time.first && range.second <= time.second)
+            return (0);
+        else if (range.first == range.second)
+            return (1);
+        else if (mid > time.second)
+            return (2);
+        else if (mid < time.first)
+            return (3);
         else
-            return (false);
-        return (true);
+            return (4);
     }
 
-    bool create_tree(pair<int, int> range, const pair<int, int> &time, int Treenode = 1)
+    bool create_tree(const pair<int, int> &time, Node *&node)
     {
-        int mid = (range.first + range.second) / 2;
-        int left = Treenode * 2;
-
-        if (range.first >= time.first && range.second <= time.second)
-            return (range_found(Treenode));
-        else if (mid < time.first)
-            return (create_tree({mid + 1, range.second}, time, left + 1));
-        else if (mid > time.second)
-            return (create_tree({range.first, mid}, time, left));
-        else
+        long mid = (node->range.first + node->range.second) / 2;
+        switch (help_check(node->range, time, mid))
         {
-            if (!create_tree({range.first, mid}, time, left))
-                return (false);
-            if (!create_tree({mid + 1, range.second}, time, left + 1))
+        case 0:
+            if (node->count <= 1)
+            {
+
+                reset.push_back(node);
+                if (node->L)
+                {
+                    if (!create_tree(time, node->L))
+                        return (clean_and_exit());
+                }
+                if (node->R)
+                {
+                    if (!create_tree(time, node->R))
+                        return (clean_and_exit());
+                }
+                node->count++;
+                return (true);
+            }
+            return (false);
+        case 1:
+            return (true);
+        case 2:
+            if (!node->L)
+                node->L = new Node({node->range.first, mid}, node->count);
+            return (create_tree(time, node->L));
+        case 3:
+            if (!node->R)
+                node->R = new Node({mid + 1, node->range.second}, node->count);
+            return (create_tree(time, node->R));
+        default:
+            if (!node->L)
+                node->L = new Node({node->range.first, mid}, node->count);
+            if (!create_tree(time, node->L))
                 return (clean_and_exit());
 
+            if (!node->R)
+                node->R = new Node({mid + 1, node->range.second}, node->count);
+            if (!create_tree(time, node->R))
+                return (clean_and_exit());
             return (true);
         }
     }
@@ -97,14 +147,18 @@ private:
 public:
     MyCalendarTwo()
     {
-        Segment_Tree.clear();
-        Segment_Tree.resize(1000 * 2, 0);
+        reset.clear();
+        root = new Node();
     }
 
     bool book(int startTime, int endTime)
     {
-        reset.clear();
-        return (create_tree({0, 1000000000}, {startTime, endTime}));
+        return (create_tree({startTime, endTime - 1}, root));
+    }
+
+    ~MyCalendarTwo()
+    {
+        delete_tree(root);
     }
 };
 
@@ -116,12 +170,31 @@ public:
 
 int main()
 {
-    MyCalendarTwo *calendar = new MyCalendarTwo();
+    MyCalendarTwo *calendar;
+    vector<pair<int, int>> tests;
+    {
+        calendar = new MyCalendarTwo();
+        tests = {{10, 20}, {50, 60}, {5, 15}, {5, 10}, {25, 55}};
+        for (pair<int, int> &test : tests)
+            cout << boolalpha << calendar->book(test.first, test.second) << "\n\n";
+        delete (calendar);
+        cout << "--------------------------------------------------------\n";
+    }
 
-    cout << boolalpha << calendar->book(10, 20) << endl;
-    /*  cout << boolalpha << calendar->book(50, 60) << endl;
-     cout << boolalpha << calendar->book(5, 15) << endl;
-     cout << boolalpha << calendar->book(5, 10) << endl;
-     cout << boolalpha << calendar->book(25, 55) << endl; */
-    delete (calendar);
+    {
+        calendar = new MyCalendarTwo();
+        tests = {{10, 20}, {10, 20}, {10, 20}};
+        for (pair<int, int> &test : tests)
+            cout << boolalpha << calendar->book(test.first, test.second) << "\n\n";
+        delete (calendar);
+        cout << "--------------------------------------------------------\n";
+    }
+    {
+        calendar = new MyCalendarTwo();
+        tests = {{10, 20}, {50, 60}, {10, 40}, {5, 15}, {5, 10}, {25, 55}};
+        for (pair<int, int> &test : tests)
+            cout << boolalpha << calendar->book(test.first, test.second) << "\n\n";
+        delete (calendar);
+        cout << "--------------------------------------------------------\n";
+    }
 }
