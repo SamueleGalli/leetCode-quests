@@ -72,16 +72,6 @@ private:
         root = nullptr;
     }
 
-    bool clean_and_exit(void)
-    {
-        for (Node *&node : reset)
-            node->count--;
-
-        reset.clear();
-
-        return (false);
-    }
-
     int help_check(const pair<long, long> &range, const pair<int, int> &time, const long &mid)
     {
         if (range.first >= time.first && range.second <= time.second)
@@ -105,18 +95,11 @@ private:
             if (node->count <= 1)
             {
 
-                reset.push_back(node);
-                if (node->L)
-                {
-                    if (!create_tree(time, node->L))
-                        return (clean_and_exit());
-                }
-                if (node->R)
-                {
-                    if (!create_tree(time, node->R))
-                        return (clean_and_exit());
-                }
+                if ((node->L && !create_tree(time, node->L)) || (node->R && !create_tree(time, node->R)))
+                    return (false);
+
                 node->count++;
+                reset.push_back(node);
                 return (true);
             }
             return (false);
@@ -133,32 +116,38 @@ private:
         default:
             if (!node->L)
                 node->L = new Node({node->range.first, mid}, node->count);
-            if (!create_tree(time, node->L))
-                return (clean_and_exit());
 
             if (!node->R)
                 node->R = new Node({mid + 1, node->range.second}, node->count);
-            if (!create_tree(time, node->R))
-                return (clean_and_exit());
-            return (true);
+
+            return (create_tree(time, node->L) && create_tree(time, node->R));
         }
     }
 
 public:
     MyCalendarTwo()
     {
-        reset.clear();
         root = new Node();
     }
 
     bool book(int startTime, int endTime)
     {
-        return (create_tree({startTime, endTime - 1}, root));
+        reset.clear();
+        if (create_tree({startTime, endTime - 1}, root))
+            return (true);
+
+        for (Node *&node : reset)
+            node->count--;
+
+        reset.clear();
+
+        return (false);
     }
 
     ~MyCalendarTwo()
     {
         delete_tree(root);
+        reset.clear();
     }
 };
 

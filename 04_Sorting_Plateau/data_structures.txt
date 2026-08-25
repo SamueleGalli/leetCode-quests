@@ -1,0 +1,21 @@
+- Binary Search
+    An efficient search algorithm for pre-sorted arrays
+    the recursive divise make the algorithm O(log n) time complexity
+
+
+- Counting_Sort/Merge_Sort/Quickselect
+    Counting_Sort(sort):
+        Create an array of size equal to the maximum value
+        count and mark every occurrence of the values
+        reconstruct the array using these counts
+    Merge_Sort(sort):
+        Recursively divide the array into halves until single elements are reached
+        merge all portions in order
+    Quickselect(find):
+        Select a pivot
+        partition the array so that smaller elements are on the left and larger elements are on the right
+        discard the "useless" portion and continue until the target element is found.
+
+
+- Divide and Conquer
+    It divides the problem like Merge Sort does, resolves the base case, and then works with the small elements obtained to build the final solution

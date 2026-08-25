@@ -1,140 +1,45 @@
-Definition of structure used:
-1) Array
-    A data structure with contiguous memory allocation
-    O(1) random access to elements via indices
+This is a collection of exercises covering various difficulties and topics
+created to strengthen my knowledge and programming skills
 
-2) Stack
-    A LIFO (Last-In, First-Out) data structure
-    The last element added is the first one to be removed
+Each exercise is also labeled with its corresponding subject/topic
+Each topic has a short explanation of the concepts used and the subject of the problem
 
-3) Monotonic Stack
-    A stack maintained in a specific order: 
-    - Increasing stack: elements are maintained in increasing order
-    - Decreasing stack: elements are maintained in decreasing order
-    work in 0(n) time complexity
+The exercises are taken from LeetCode Questlines, and I primarily solve them in C++
+I try to follow the programming style and best practices as closely as possible
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-4) Queue
-    There are various type:
-    standard queue: A FIFO (First-In, First-Out) data structure where elements are added to the back and removed from the front
-    deque: a Double-ended queue A queue that allows insertion and removal from both ends
-    priority_queue: A queue where the element with the highest (Max-Heap) or lowest (Min-Heap) priority is always at the front
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-5) Linked List
-    A linear data structure where elements are stored in nodes, with each node containing data and a pointer (or reference) to the next node, connected from head to tail
-
-6) Prefix Sum
-    A technique where you create an array to store the cumulative sum of preceding values, allowing you to calculate the sum of any sub-range in O(1) time.
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-7) Binary Search
-    An efficient search algorithm for pre-sorted arrays
-    the recursive divise make the algorithm O(log n) time complexity
-
-8) Counting_Sort/Merge_Sort/Quickselect
-    Counting_Sort(sort):
-        Create an array of size equal to the maximum value
-        count and mark every occurrence of the values
-        reconstruct the array using these counts
-    Merge_Sort(sort):
-        Recursively divide the array into halves until single elements are reached
-        merge all portions in order
-    Quickselect(find):
-        Select a pivot
-        partition the array so that smaller elements are on the left and larger elements are on the right
-        discard the "useless" portion and continue until the target element is found.
-
-9) Divide and Conquer
-    It divides the problem like Merge Sort does, resolves the base case, and then works with the small elements obtained to build the final solution
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-10) Sliding Window
-    A technique that uses a range of elements (a "window") that moves across the array to process data efficiently
-
-11) Rolling Hash
-    Converting a string or number into a hash (a fixed-size value) to compare elements much faster.
-
-12)Backtracking
-    A recursive technique that explores potential solutions and "backtracks" (discards) the wrong choices as soon as it determines they cannot lead to a valid result
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-13) Graph
-    A graph is a data structure made of nodes (vertices) and connections between them (edges)
-    It is used to represent relationships between elements
-    It is represented as:
-        G = (V, E)
-    where:
-        - V represents the set of vertices.
-        - E represents the set of edges.
-    There are some helper data structures used with graphs, such as:
-        Union Find (Disjoint Set Union)
-            It uses an indexed array to keep track of the parent of each element.
-            It is used to:            
-            Find: Find the representative of the group containing an element
-            Union: Merge two different groups
-            Each element starts as an independent set, therefore a size array is often initialized with 1
-            Additional optimizations:
-                - Path Compression reduces the tree depth during Find
-                - Union by Size/Rank keeps trees balanced
-            When elements cannot be directly used as array indexes (for example large values, arbitrary values, or values represented by other objects),
-            a map can be used to convert them into indexes for the DSU arrays
-            A size vector can then be used to track the number of elements in each connected component and retrieve the largest component
-
-14) DFS (Depth First Search)
-    recursion-based traversal that goes to the deepest node possible, then backtracks to explore remaining branches.
-
-15) BFS (Breadth-First Search)
-    is a graph traversal algorithm that explores nodes level by level
-    It starts from a source node, uses a queue (FIFO) to keep track of nodes to visit,
-    and visits all unvisited neighbors before moving to the next level
-    BFS is commonly used to find the shortest path in an unweighted graph and runs in O(V + E) time
-
-16) Binary Tree
-    A tree data structure made of nodes.
-    Each node can have at most 2 children (left and right).
-    The first node is called the root.
-    A node without children is called a leaf.
-    Example:
-             1
-            / \
-           2   3
-          / \
-         4   5
-    There are three ways of traversing them:
-        - Pre-order:
-            (ROOT → LEFT → RIGHT)
-            Example:
-                1 → 2 → 4 → 5 → 3
-        - In-order:
-            (LEFT → ROOT → RIGHT)
-            Example:
-                4 → 2 → 5 → 1 → 3
-        - Post-order:
-            (LEFT → RIGHT → ROOT)
-            Example:
-                4 → 5 → 2 → 3 → 1
-
-       A Binary Tree can have different specializations:
-        Binary Search Tree (BST):
-            A binary tree where:
-                LEFT < ROOT < RIGHT
-                This allows efficient searching, insertion and deletion
-
-        Segment Tree:
-            A binary tree that represents ranges of an array,used to efficiently perform range queries such as sums, minimums, or maximums
-        
 
 Extra:
 - Lambda: anonymous function used to customize existing algorithms
-    In comparator functions:
-        - return true  -> keep the current order (no swap)
-        - return false -> elements are in the wrong order (swap)
+    - In comparator/predicate functions:
+        - return true  → the condition is satisfied
+        - return false → the condition is not satisfied
 
-- Dijkstra
-    finds the shortest path from a starting node to all other nodes in a weighted graph with non-negative edge weights
-    It always explores the node with the smallest known distance and updates the distances of its neighbors if a shorter path is found
+    - In sorting algorithms such as std::sort:
+        - return true  → the first element should come before the second(no swap)
+        - return false → the first element should not come before the second(swap)
+        (the algorithm may then reorder/swap the elements)
+
+    exemple:
+        [Capture](parameters) -> return_type
+        {
+            body
+        }
+    
+        Capture:
+            []       → captures nothing
+            [x]      → captures x by value
+            [&x]     → captures x by reference
+            [=]      → captures all used external variables by value
+            [&]      → captures all used external variables by reference
+            [=, &x]  → captures all by value, except x by reference
+            [&, x]   → captures all by reference, except x by value
+
+        Parameters:
+            - Values passed to the lambda.
+
+        -> return_type:
+            - Specifies the return type explicitly.
+
+        Body:
+            - Contains the code executed by the lambda.

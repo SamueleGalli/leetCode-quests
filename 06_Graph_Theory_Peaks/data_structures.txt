@@ -1,0 +1,42 @@
+
+- Graph
+    A graph is a data structure made of nodes (vertices) and connections between them (edges)
+    It is used to represent relationships between elements
+    It is represented as:
+        G = (V, E)
+    where:
+        - V represents the set of vertices.
+        - E represents the set of edges.
+    There are some helper data structures used with graphs, such as:
+        - Union Find (Disjoint Set Union)
+            It uses an indexed array to keep track of the parent of each element.
+            It is used to:            
+                - Find: Find the representative of the group containing an element
+                - Union: Merge two different groups
+                Each element starts as an independent set, therefore a size array is often initialized with 1
+            Additional optimizations:
+                - Path Compression reduces the tree depth during Find
+                - Union by Size/Rank keeps trees balanced
+            When elements cannot be directly used as array indexes (for example large values, arbitrary values, or values represented by other objects),
+            a map can be used to convert them into indexes for the DSU arrays
+            A size vector can then be used to track the number of elements in each connected component and retrieve the largest component
+
+
+- DFS (Depth First Search)
+    recursion-based traversal that goes to the deepest node possible, then backtracks to explore remaining branches.
+
+
+-  BFS (Breadth-First Search)
+    is a graph traversal algorithm that explores nodes level by level
+    It starts from a source node, uses a queue (FIFO) to keep track of nodes to visit,
+    and visits all unvisited neighbors before moving to the next level
+    BFS is commonly used to find the shortest path in an unweighted graph and runs in O(V + E) time
+
+
+- Dijkstra
+    finds the shortest path from a starting node to all other nodes in a weighted graph with non-negative edge weights
+    It always explores the node with the smallest known distance and updates the distances of its neighbors if a shorter path is found
+    Common structures:
+        - Graph        → adjacency list
+        - Distances    → vector
+        - Processing   → priority queue (min-heap)

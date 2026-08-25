@@ -1,0 +1,11 @@
+
+- Sliding Window
+    A technique that uses a range of elements (a "window") that moves across the array to process data efficiently
+
+
+- Rolling Hash
+    Converting a string or number into a hash (a fixed-size value) to compare elements much faster.
+
+
+- Backtracking
+    A recursive technique that explores potential solutions and "backtracks" (discards) the wrong choices as soon as it determines they cannot lead to a valid result

@@ -1,0 +1,15 @@
+- Array
+    A data structure with contiguous memory allocation
+    O(1) random access to elements via indices
+
+
+- Stack
+    A LIFO (Last-In, First-Out) data structure
+    The last element added is the first one to be removed
+
+
+- Monotonic Stack
+    A stack maintained in a specific order: 
+    - Increasing stack: elements are maintained in increasing order
+    - Decreasing stack: elements are maintained in decreasing order
+    work in 0(n) time complexity

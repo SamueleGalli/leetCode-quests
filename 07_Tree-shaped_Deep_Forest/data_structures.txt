@@ -1,0 +1,63 @@
+- Binary Tree
+    A tree data structure made of nodes.
+    Each node can have at most 2 children (left and right).
+    The first node is called the root.
+    A node without children is called a leaf.
+    Example:
+             1
+            / \
+           2   3
+          / \
+         4   5
+    There are three ways of traversing them:
+        - Pre-order:
+            (ROOT → LEFT → RIGHT)
+            Example:
+                1 → 2 → 4 → 5 → 3
+        - In-order:
+            (LEFT → ROOT → RIGHT)
+            Example:
+                4 → 2 → 5 → 1 → 3
+        - Post-order:
+            (LEFT → RIGHT → ROOT)
+            Example:
+                4 → 5 → 2 → 3 → 1
+
+    A Binary Tree can have different specializations:
+        - Binary Search Tree (BST):
+            A binary tree where:
+                LEFT < ROOT < RIGHT
+                This allows efficient searching, insertion and deletion
+
+        - Segment Tree:
+            A binary tree that represents ranges of an array
+            The range is recursively divided into smaller ranges to build the tree
+            allowing efficient range queries such as sums, minimums, or maximums.
+            The information stored in each node can be adapted to the problem,
+            allowing it to be used for more complex tasks such as interval scheduling.
+            
+            exemple:
+            A = [2, 1, 5, 3, 4, 7, 6, 8]
+            Tree:
+                        [0,7] = 36
+                        /        \
+                 [0,3] = 11      [4,7] = 25
+                  /    \           /     \
+            [0,1]=3   [2,3]=8  [4,5]=11  [6,7]=14
+             /  \       /  \      /  \      /  \
+            2    1     5    3    4    7    6    8
+
+        - Trie:
+            A tree used mainly to store strings and efficiently search for words or prefixes
+            Each edge represents a character,, and a path from the root represents a word.
+            A node can have more than two children.
+
+            exemple:
+                  root
+                 /    \
+                 c      d
+                 |      |
+                 a      o
+                 / \     |
+                 t   r    g
+            mean: cat, car, dog

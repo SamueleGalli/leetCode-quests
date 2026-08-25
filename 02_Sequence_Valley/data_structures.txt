@@ -1,0 +1,5 @@
+- Queue
+    There are various type:
+    standard queue: A FIFO (First-In, First-Out) data structure where elements are added to the back and removed from the front
+    deque: a Double-ended queue A queue that allows insertion and removal from both ends
+    priority_queue: A queue where the element with the highest (Max-Heap) or lowest (Min-Heap) priority is always at the front
