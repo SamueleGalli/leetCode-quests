@@ -20,33 +20,52 @@ using namespace std;
 #include <iostream>
 #include <vector>
 
-//TODO calcola quanti blocchi sorpassare per ottimizzare e non andare in loop o overflow
-
+//TODO QUASI FATTO?
 class Solution
 {
 private:
     pair<bool, long long> in_range(long long start, int n, int k)
     {
-        int size = 1;
+        long long size = 1;
         long long sub = 0;
-        long long end = 0;
+        long long end = start;
+        long long parzial = 0;
 
-        while (size <= k && start <= n)
+        while (size <= k && start <= n && start * 10 <= n)
         {
-            end = start + 9;
+            start *= 10;
+            end = (end * 10) + 9;
             sub = end - n;
+            parzial = (end - start) + 1;
 
             if (n <= end)
-                size += 10 - sub;
+                size += parzial - sub;
             else if (end <= n)
-                size += 10;
-
-            if (start > n / 10)
-                break;
-
-            start *= 10;
+                size += parzial;
         }
         return {size >= k, size};
+    }
+
+    pair<long long, long long> valid_optimization(long long n, long long k, long long start, const long long &prefix_size)
+    {
+        long long to_go = 0;
+        long long new_start = start + to_go;
+        long long current_size = in_range(start, n, k).second;
+
+        while (k > current_size)
+        {
+            to_go++;
+            k -= current_size;
+            start++;
+            current_size = in_range(start, n, k).second;
+        }
+
+        while (n > 0 && n != new_start)
+            n /= 10;
+
+        if (to_go > 1 && n == new_start)
+            to_go--;
+        return {k - (to_go * prefix_size), start + to_go};
     }
 
     int prefix_lexic(int &n, int k, long long start)
@@ -54,18 +73,18 @@ private:
         if (k == 0)
             return (start);
 
-        long long prefix_size = in_range(start * 10, n, k).second;
+        pair<bool, long long> check_branch = in_range(start, n, k);
 
-        if (k < prefix_size)
+        if (check_branch.first)
         {
             for (int i = 0; i < 10; i++)
             {
                 long long next_prefix = start * 10 + i;
 
                 if (next_prefix > n)
-                    break;
+                    return (prefix_lexic(n, k - 1, start + 1));
 
-                pair<bool, long long> check_branch = in_range(next_prefix, n, k);
+                check_branch = in_range(next_prefix, n, k);
 
                 if (check_branch.first)
                     return (prefix_lexic(n, k - 1, next_prefix));
@@ -74,12 +93,16 @@ private:
             }
         }
         else
-            return (prefix_lexic(n, k - prefix_size, start + 1));
+        {
+            pair<long long, long long> optimize = valid_optimization(n, k - 1, start * 10, in_range(start * 10, n, k).second);
+            return (prefix_lexic(n, optimize.first, optimize.second));
+        }
         return (-1);
     }
 
 public:
-    int findKthNumber(int n, int k)
+    int
+    findKthNumber(int n, int k)
     {
         return (prefix_lexic(n, k - 1, 1));
     }
@@ -92,23 +115,38 @@ int main()
     int n;
     int k;
 
-    /*     n = 13;
-        k = 2;
-        result = s.findKthNumber(n, k);
-        cout << "result = " << result << endl;
+    n = 13;
+    k = 2;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
 
-        n = 1;
-        k = 1;
-        result = s.findKthNumber(n, k);
-        cout << "result = " << result << endl;
+    n = 1;
+    k = 1;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
 
-        n = 13;
-        k = 11;
-        result = s.findKthNumber(n, k);
-        cout << "result = " << result << endl;
+    n = 2;
+    k = 2;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
+
+    n = 10;
+    k = 3;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
+
+    n = 13;
+    k = 11;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
 
     n = 25;
     k = 15;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
+
+    n = 100;
+    k = 90;
     result = s.findKthNumber(n, k);
     cout << "result = " << result << endl;
 
@@ -135,7 +173,12 @@ int main()
     n = 1000213;
     k = 50;
     result = s.findKthNumber(n, k);
-    cout << "result = " << result << endl;*/
+    cout << "result = " << result << endl;
+
+    n = 523;
+    k = 50;
+    result = s.findKthNumber(n, k);
+    cout << "result = " << result << endl;
 
     n = 1000000000;
     k = 1000000000;
