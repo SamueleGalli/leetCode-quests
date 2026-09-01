@@ -20,52 +20,38 @@ using namespace std;
 #include <iostream>
 #include <vector>
 
-//TODO QUASI FATTO?
 class Solution
 {
 private:
     pair<bool, long long> in_range(long long start, int n, int k)
     {
         long long size = 1;
-        long long sub = 0;
         long long end = start;
-        long long parzial = 0;
 
         while (size <= k && start <= n && start * 10 <= n)
         {
             start *= 10;
             end = (end * 10) + 9;
-            sub = end - n;
-            parzial = (end - start) + 1;
 
-            if (n <= end)
-                size += parzial - sub;
-            else if (end <= n)
-                size += parzial;
+            if (end > n)
+                size += n - start + 1;
+            else
+                size += end - start + 1;
         }
         return {size >= k, size};
     }
 
-    pair<long long, long long> valid_optimization(long long n, long long k, long long start, const long long &prefix_size)
+    pair<long long, long long> valid_optimization(long long n, long long k, long long start)
     {
-        long long to_go = 0;
-        long long new_start = start + to_go;
         long long current_size = in_range(start, n, k).second;
 
         while (k > current_size)
         {
-            to_go++;
             k -= current_size;
             start++;
             current_size = in_range(start, n, k).second;
         }
-
-        while (n > 0 && n != new_start)
-            n /= 10;
-
-        if (to_go > 1 && n == new_start)
-            to_go--;
-        return {k - (to_go * prefix_size), start + to_go};
+        return {k, start};
     }
 
     int prefix_lexic(int &n, int k, long long start)
@@ -74,15 +60,13 @@ private:
             return (start);
 
         pair<bool, long long> check_branch = in_range(start, n, k);
-
         if (check_branch.first)
         {
             for (int i = 0; i < 10; i++)
             {
                 long long next_prefix = start * 10 + i;
-
                 if (next_prefix > n)
-                    return (prefix_lexic(n, k - 1, start + 1));
+                    break;
 
                 check_branch = in_range(next_prefix, n, k);
 
@@ -94,15 +78,14 @@ private:
         }
         else
         {
-            pair<long long, long long> optimize = valid_optimization(n, k - 1, start * 10, in_range(start * 10, n, k).second);
+            pair<long long, long long> optimize = valid_optimization(n, k, start);
             return (prefix_lexic(n, optimize.first, optimize.second));
         }
-        return (-1);
+        return (prefix_lexic(n, k - 1, start + 1));
     }
 
 public:
-    int
-    findKthNumber(int n, int k)
+    int findKthNumber(int n, int k)
     {
         return (prefix_lexic(n, k - 1, 1));
     }
@@ -155,7 +138,7 @@ int main()
     result = s.findKthNumber(n, k);
     cout << "result = " << result << endl;
 
-    n = 213;
+        n = 213;
     k = 100;
     result = s.findKthNumber(n, k);
     cout << "result = " << result << endl;
