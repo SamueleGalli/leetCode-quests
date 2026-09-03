@@ -43,8 +43,11 @@ public:
         vector<vector<int>> result;
         pair<int, int> limit;
 
-        sort(intervals.begin(), intervals.end(), [](const vector<int> &first, const vector<int> &second)
-             { return (first[0] < second[0]); });
+        sort(intervals.begin(), intervals.end(),
+             [](const vector<int> &first, const vector<int> &second)
+             {
+                 return (first[0] < second[0]);
+             });
         limit.first = intervals[0][0];
         limit.second = intervals[0][1];
         result.reserve(intervals.size());
@@ -120,11 +123,11 @@ int main()
     result = s.merge(intervals);
     print_result(result);
 
-    intervals = {{{2,3},{4,5},{6,7},{8,9},{1,10}}};
+    intervals = {{{2, 3}, {4, 5}, {6, 7}, {8, 9}, {1, 10}}};
     result = s.merge(intervals);
     print_result(result);
 
-    intervals = {{0,2},{2,3},{4,4},{0,1},{5,7},{4,5},{0,0}};
+    intervals = {{0, 2}, {2, 3}, {4, 4}, {0, 1}, {5, 7}, {4, 5}, {0, 0}};
     result = s.merge(intervals);
     print_result(result);
 }

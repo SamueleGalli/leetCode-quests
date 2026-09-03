@@ -66,13 +66,19 @@ public:
         for (size_t i = 0; i < intervals.size(); i++)
             index.push_back({intervals[i][0], i});
 
-        sort(index.begin(), index.end(), [](pair<int, size_t> &a, pair<int, size_t> &b)
-             { return (a.first < b.first); });
+        sort(index.begin(), index.end(),
+             [](pair<int, size_t> &a, pair<int, size_t> &b)
+             {
+                 return (a.first < b.first);
+             });
 
         for (size_t i = 0; i < intervals.size(); i++)
         {
-            value = lower_bound(index.begin(), index.end(), intervals[i][1], [](pair<int, size_t> &a, int b)
-                                { return (a.first < b); });
+            value = lower_bound(index.begin(), index.end(), intervals[i][1],
+                                [](pair<int, size_t> &a, int b)
+                                {
+                                    return (a.first < b);
+                                });
             if (value != index.end())
                 result[i] = static_cast<int>(value->second);
             else

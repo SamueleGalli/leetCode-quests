@@ -97,12 +97,13 @@ private:
         }
 
         vector<pair<string, int>> temp(video.begin(), video.end());
-        sort(temp.begin(), temp.end(), [](const pair<string, int> &a, const pair<string, int> &b)
-        {
-            if (a.second != b.second)
-                return (a.second < b.second);
-            return (a.first < b.first);
-        });
+        sort(temp.begin(), temp.end(),
+             [](const pair<string, int> &a, const pair<string, int> &b)
+             {
+                 if (a.second != b.second)
+                     return (a.second < b.second);
+                 return (a.first < b.first);
+             });
 
         for (pair<string, int> &to_watch : temp)
             result.push_back(to_watch.first);
@@ -124,8 +125,6 @@ public:
         return (give_result(list_video, watchedVideos));
     }
 };
-
-
 
 void testcase(vector<vector<string>> &watchedVideos, vector<vector<int>> &friends, int id, int level)
 {

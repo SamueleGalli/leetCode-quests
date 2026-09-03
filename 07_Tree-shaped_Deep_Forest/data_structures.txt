@@ -36,7 +36,7 @@
             The information stored in each node can be adapted to the problem,
             allowing it to be used for more complex tasks such as interval scheduling.
             
-            exemple:
+            Exemple:
             A = [2, 1, 5, 3, 4, 7, 6, 8]
             Tree:
                         [0,7] = 36
@@ -52,7 +52,7 @@
             Each edge represents a character,, and a path from the root represents a word.
             A node can have more than two children.
 
-            exemple:
+            Exemple:
                   root
                  /    \
                  c      d
@@ -61,3 +61,22 @@
                  / \     |
                  t   r    g
             mean: cat, car, dog
+        
+        - Minimum Spanning Tree (MST):
+            A tree that connects all vertices with the minimum possible total edge weight and contains no cycles
+            Select edges so that all vertices are connected with the minimum total cost,
+            without creating cycles
+
+            Example:
+                1
+            A ----- B
+             \      /
+            3 \    / 2
+               \  /
+                C
+
+            MST:
+            A -- B (1)
+            B -- C (2)
+
+            Total weight = A(1) + B(2) = T(3)
