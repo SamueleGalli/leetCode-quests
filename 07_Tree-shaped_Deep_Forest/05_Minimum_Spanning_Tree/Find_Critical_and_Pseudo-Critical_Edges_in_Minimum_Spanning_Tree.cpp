@@ -36,6 +36,8 @@ using namespace std;
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <limits>
+
 class Solution
 {
 private:
@@ -49,31 +51,42 @@ private:
         return (DSU[node]);
     }
 
-    int set_all_up(int &n, vector<vector<int>> &edges,
-                   int count = 0, int num_nodes = 0)
+    int Critical_and_Pseudo(const vector<vector<int>> &edges, int &n, int type, int node = -1)
     {
-        sort(edges.begin(), edges.end(),
-             [](const vector<int> &a, const vector<int> &b)
-             {
-                 return (a[2] < b[2]);
-             });
+        int count = 0;
+        int c_nodes = 0;
+        int A;
+        int B;
 
         DSU.resize(n);
 
-        for (size_t i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             DSU[i] = i;
 
-        for (size_t i = 0; i < edges.size() && num_nodes < n - 1; i++)
+        if (type == 2)
         {
-            int a = DSU_find(edges[i][0]);
-            int b = DSU_find(edges[i][1]);
-            if (a != b)
+            A = DSU_find(edges[node][0]);
+            B = DSU_find(edges[node][1]);
+            DSU[A] = DSU[B];
+            count += edges[node][2];
+            c_nodes++;
+        }
+        for (size_t i = 0; i < edges.size() && c_nodes < n - 1; i++)
+        {
+            if (type == 1 && i == static_cast<size_t>(node))
+                continue;
+
+            A = DSU_find(edges[i][0]);
+            B = DSU_find(edges[i][1]);
+            if (A != B)
             {
-                DSU[a] = DSU[b];
+                DSU[A] = DSU[B];
                 count += edges[i][2];
-                num_nodes++;
+                c_nodes++;
             }
         }
+        if (c_nodes < n - 1 && type == 1)
+            return (numeric_limits<int>::max());
         return (count);
     }
 
@@ -81,20 +94,27 @@ public:
     vector<vector<int>> findCriticalAndPseudoCriticalEdges(int n, vector<vector<int>> &edges)
     {
         vector<vector<int>> result(2);
+        int count;
 
-        int count = set_all_up(n, edges);
+        for (size_t i = 0; i < edges.size(); i++)
+            edges[i].push_back(i);
+
+        sort(edges.begin(), edges.end(),
+             [](const vector<int> &a, const vector<int> &b)
+             {
+                 return (a[2] < b[2]);
+             });
+
+        count = Critical_and_Pseudo(edges, n, 0);
 
         for (size_t i = 0; i < edges.size(); i++)
         {
-            if (Critical(i))
-            {
-                result[0].push_back(i);
-            }
-            else if (Pseudo_Critical(i))
-            {
-                result[1].push_back(i);
-            }
+            if (Critical_and_Pseudo(edges, n, 1, i) > count)
+                result[0].push_back(edges[i][3]);
+            else if (Critical_and_Pseudo(edges, n, 2, i) == count)
+                result[1].push_back(edges[i][3]);
         }
+        return (result);
     }
 };
 
@@ -105,16 +125,21 @@ void testcase(int n, vector<vector<int>> edges)
 
     result = s.findCriticalAndPseudoCriticalEdges(n, edges);
 
-    cout << "Critical: ";
-    for (size_t i = 0; i < result.size(); i++)
+    cout << "Critical: {";
+    for (size_t i = 0; i < result[0].size(); i++)
     {
-        cout << "{";
-        for (size_t j = 0; j < result[i].size(); j++)
-            cout << result[i][j] << "}";
-        if (i + 1 < result.size())
-            cout << "\nPrseudo-Critical: ";
+        cout << result[0][i];
+        if (i + 1 < result[0].size())
+            cout << ", ";
     }
-    cout << "}\n";
+    cout << "}\nPseudo-Critical: {";
+    for (size_t i = 0; i < result[1].size(); i++)
+    {
+        cout << result[1][i];
+        if (i + 1 < result[1].size())
+            cout << ", ";
+    }
+    cout << "}\n\n";
 }
 
 int main()
@@ -123,4 +148,5 @@ int main()
     testcase(5, {{0, 1, 1}, {1, 2, 1}, {2, 3, 2}, {0, 3, 2}, {0, 4, 3}, {3, 4, 3}, {1, 4, 6}});
 
     testcase(4, {{0, 1, 1}, {1, 2, 1}, {2, 3, 1}, {0, 3, 1}});
+    testcase(6, {{0, 1, 1}, {1, 2, 1}, {0, 2, 1}, {2, 3, 4}, {3, 4, 2}, {3, 5, 2}, {4, 5, 2}});
 }
