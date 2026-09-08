@@ -40,6 +40,32 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+class Solution
+{
+private:
+    int total;
+
+    int give_lenght(TreeNode *&root)
+    {
+        if (!root)
+            return (0);
+        int left_branch = give_lenght(root->left);
+        int right_branch = give_lenght(root->right);
+        total = max(total, left_branch + right_branch);
+
+        return (max(left_branch, right_branch) + 1);
+    }
+
+public:
+    int diameterOfBinaryTree(TreeNode *root)
+    {
+        total = 0;
+
+        give_lenght(root);
+
+        return (total);
+    }
+};
 
 TreeNode *create_tree(const vector<optional<int>> &Tree, queue<TreeNode *> &list_node)
 {

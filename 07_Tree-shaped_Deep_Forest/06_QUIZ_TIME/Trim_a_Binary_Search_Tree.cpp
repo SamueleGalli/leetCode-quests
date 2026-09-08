@@ -39,6 +39,37 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+class Solution
+{
+public:
+    TreeNode *trimBST(TreeNode *root, int low, int high)
+    {
+        TreeNode *branch;
+        
+        if (!root)
+            return (nullptr);
+
+        if (root->val > high)
+        {
+            branch = root->left;
+            delete (root);
+            return (trimBST(branch, low, high));
+        }
+        else if (root->val < low)
+        {
+            branch = root->right;
+            delete (root);
+            return (trimBST(branch, low, high));
+        }
+        else
+        {
+            root->left = trimBST(root->left, low, high);
+            root->right = trimBST(root->right, low, high);
+             return (root);
+        }
+    }
+};
+
 TreeNode *create_tree(const vector<optional<int>> &Tree, queue<TreeNode *> &list_node)
 {
     TreeNode *head = list_node.front();
@@ -105,11 +136,10 @@ void testcase(vector<optional<int>> Tree, int low, int high)
     result = s.trimBST(root, low, high);
     cout << "the Tree is\n\n";
     print_tree(result);
+    cout << "-----------------------------------------------------\n";
 
-    delete_tree(root);
     delete_tree(result);
     result = nullptr;
-    root = nullptr;
 }
 
 int main()
