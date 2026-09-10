@@ -69,7 +69,71 @@ private:
         delete (Head);
     }
 
+    TreeNode *Create_Tree(int start, int end, const vector<int> &baskets)
+    {
+        if (start == end)
+            return (new TreeNode(baskets[start]));
+
+        int mid = (start + end) / 2;
+        TreeNode *node = new TreeNode(0);
+
+        node->left = Create_Tree(start, mid, baskets);
+        node->right = Create_Tree(mid + 1, end, baskets);
+
+        node->val = max(node->left->val, node->right->val);
+
+        return (node);
+    }
+
+    bool search_fruit(TreeNode *&node, const int &fruit)
+    {
+        if (node)
+        {
+            if (!node->left && !node->right)
+            {
+                if (node->val >= fruit)
+                {
+                    node->val = 0;
+                    return (true);
+                }
+                else
+                    return (false);
+            }
+
+            if (node->val >= fruit)
+            {
+                if (search_fruit(node->left, fruit))
+                {
+                    node->val = max(node->left->val, node->right->val);
+                    return (true);
+                }
+                else if (search_fruit(node->right, fruit))
+                {
+                    node->val = max(node->left->val, node->right->val);
+                    return (true);
+                }
+            }
+        }
+        return (false);
+    }
+
 public:
+    int numOfUnplacedFruits(vector<int> &fruits, vector<int> &baskets)
+    {
+        TreeNode *Head = Create_Tree(0, static_cast<int>(baskets.size() - 1), baskets);
+        int count = static_cast<int>(baskets.size());
+
+        for (size_t i = 0; i < fruits.size(); i++)
+        {
+            if (search_fruit(Head, fruits[i]))
+                count--;
+        }
+
+        delete_tree(Head);
+        Head = nullptr;
+
+        return (count);
+    }
 };
 
 int main()
