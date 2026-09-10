@@ -13,10 +13,10 @@ Example 2:
 
 Constraints:
 
-* 1 <= arr.length <= 105
-* 1 <= arr[i] <= 104
+* 1 <= arr.length <= 10^5
+* 1 <= arr[i] <= 10^4
 * 1 <= k <= arr.length
-* 0 <= threshold <= 104
+* 0 <= threshold <= 10^4
 */
 
 using namespace std;

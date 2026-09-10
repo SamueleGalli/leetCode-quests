@@ -29,7 +29,7 @@ Example 2:
 Constraints:
 
 * n == customers.length == grumpy.length
-* 1 <= minutes <= n <= 2 * 104
+* 1 <= minutes <= n <= 2 * 10^4
 * 0 <= customers[i] <= 1000
 * grumpy[i] is either 0 or 1.
 */

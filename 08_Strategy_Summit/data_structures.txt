@@ -1,0 +1,14 @@
+- Greedy
+    Is an algorithmic strategy that takes the option that looks best at that moment
+    The objective is to arrive at the best overall solution
+
+    Exemple:
+        subject: need to arrive at 18
+        vector<int> coins = {10, 5, 2, 1, 50, 20};
+        takes 10 (18 - 10 = 8)
+        takes 5 (8 - 5 = 3)
+        takes 2 (3 - 2 = 1)
+        takes 1 (1 - 1 = 0)
+        the other coins are discarded
+        
+        10 + 5 + 2 + 1 = 18

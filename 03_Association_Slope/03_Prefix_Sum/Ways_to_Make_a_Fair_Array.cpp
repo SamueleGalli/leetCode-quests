@@ -37,8 +37,8 @@ Example 3:
 
 Constraints:
 
-* 1 <= nums.length <= 105
-* 1 <= nums[i] <= 104
+* 1 <= nums.length <= 10^5
+* 1 <= nums[i] <= 10^4
 */
 
 using namespace std;

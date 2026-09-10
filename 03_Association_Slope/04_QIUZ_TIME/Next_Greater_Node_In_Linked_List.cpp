@@ -22,8 +22,8 @@ Example 2:
 Constraints:
 
     * The number of nodes in the list is n.
-    * 1 <= n <= 104
-    * 1 <= Node.val <= 109
+    * 1 <= n <= 10^4
+    * 1 <= Node.val <= 10^9
 */
 
 using namespace std;

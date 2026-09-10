@@ -26,7 +26,7 @@ Example 3:
 
 Constraints:
 
-* The number of nodes in the tree is in the range [0, 104].
+* The number of nodes in the tree is in the range [0, 10^4].
 * -10^5 <= Node.val <= 10^5
 * Each node has a unique value.
 * root is a valid binary search tree.

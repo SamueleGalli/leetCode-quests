@@ -40,7 +40,7 @@ Example 3:
 Constraints:
 
 * bloomDay.length == n
-* 1 <= n <= 105
+* 1 <= n <= 10^5
 * 1 <= bloomDay[i] <= 10^9
 * 1 <= m <= 106
 * 1 <= k <= n

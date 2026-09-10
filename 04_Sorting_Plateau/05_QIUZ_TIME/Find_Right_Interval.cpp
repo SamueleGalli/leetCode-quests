@@ -30,7 +30,7 @@ Example 3:
 
 Constraints:
 
-* 1 <= intervals.length <= 2 * 104
+* 1 <= intervals.length <= 2 * 10^4
 * intervals[i].length == 2
 * -106 <= starti <= endi <= 106
 * The start point of each interval is unique.

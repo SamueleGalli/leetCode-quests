@@ -35,8 +35,8 @@ Example 2:
 Constraints:
 
 * n == fruits.length == baskets.length
-* 1 <= n <= 105
-* 1 <= fruits[i], baskets[i] <= 109
+* 1 <= n <= 10^5
+* 1 <= fruits[i], baskets[i] <= 10^9
 */
 
 using namespace std;

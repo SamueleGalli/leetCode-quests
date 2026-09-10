@@ -14,11 +14,11 @@ Example 2:
 
 Constraints:
 
-* The number of nodes in the tree is in the range [1, 104].
-* 0 <= Node.val <= 104
+* The number of nodes in the tree is in the range [1, 10^4].
+* 0 <= Node.val <= 10^4
 * The value of each node in the tree is unique.
 * root is guaranteed to be a valid binary search tree.
-* 0 <= low <= high <= 104
+* 0 <= low <= high <= 10^4
 */
 
 using namespace std;

@@ -149,8 +149,9 @@ int main()
 {
     Solution s;
     int result;
+    vector<int> nums;
 
-    vector<int> nums = {3, 10, 5, 25, 2, 8};
+    nums = {3, 10, 5, 25, 2, 8};
     result = s.findMaximumXOR(nums);
     cout << "result = " << result << endl;
 

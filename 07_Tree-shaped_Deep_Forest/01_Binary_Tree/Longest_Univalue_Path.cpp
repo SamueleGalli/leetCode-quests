@@ -14,7 +14,7 @@ Example 2:
         Explanation: The shown image shows that the longest path of the same value (i.e. 4).
 
 Constraints:
-* The number of nodes in the tree is in the range [0, 104].
+* The number of nodes in the tree is in the range [0, 10^4].
 * -1000 <= Node.val <= 1000
 * The depth of the tree will not exceed 1000.
 */

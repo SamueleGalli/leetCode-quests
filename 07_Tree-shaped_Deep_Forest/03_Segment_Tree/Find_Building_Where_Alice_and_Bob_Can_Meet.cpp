@@ -30,7 +30,7 @@ Example 2:
 Constraints:
 
 * 1 <= heights.length <= 5 * 10^4
-* 1 <= heights[i] <= 109
+* 1 <= heights[i] <= 10^9
 * 1 <= queries.length <= 5 * 10^4
 * queries[i] = [a_i, b_i]
 * 0 <= a_i, b_i <= heights.length - 1
