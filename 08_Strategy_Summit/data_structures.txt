@@ -12,3 +12,7 @@
         the other coins are discarded
         
         10 + 5 + 2 + 1 = 18
+
+- Dynamic Programming
+    Solving a problem by dividing it into smaller subproblems and saving the calculated results so they can be reused
+    avoiding unnecessary recalculations.
