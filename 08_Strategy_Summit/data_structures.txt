@@ -16,3 +16,10 @@
 - Dynamic Programming
     Solving a problem by dividing it into smaller subproblems and saving the calculated results so they can be reused
     avoiding unnecessary recalculations.
+    It can use a memo (e.g. a vector) to save data.
+
+- 2D Dynamic Programming
+    The same as Dynamic Programming,
+    but the memo has two dimensions,
+    usually represented as dp[i][j],
+    where the state depends on two variables
