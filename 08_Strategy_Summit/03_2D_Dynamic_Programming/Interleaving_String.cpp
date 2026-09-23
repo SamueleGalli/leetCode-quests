@@ -1,8 +1,4 @@
 /*
-
-Topics
-premium lock icon
-Companies
 Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
 
 An interleaving of two strings s and t is a configuration where s and t are divided into n and m substrings respectively, such that:
@@ -32,14 +28,80 @@ Example 3:
 
     Input: s1 = "", s2 = "", s3 = ""
     Output: true
- 
+
 
 Constraints:
 
 * 0 <= s1.length, s2.length <= 100
 * 0 <= s3.length <= 200
 * s1, s2, and s3 consist of lowercase English letters.
- 
+
 
 * Follow up: Could you solve it using only O(s2.length) additional memory space?
 */
+
+using namespace std;
+
+#include <iostream>
+#include <vector>
+
+/*
+There are two main ways to solve this problem:
+    * Top-Down = the classic slower approach, using recursion with i and j.
+    * Bottom-Up = the optimized approach, with less memory, using the previous values from i - 1 and j - 1.
+
+The latter is the one I have studied more carefully, using the three strings like a map with rows and columns, where each cell uses previous values to perform the new check
+If there is a mismatch at position (i, j), that path becomes invalid, so all the cells from j to the end of s2 become invalid for that row
+*/
+
+class Solution
+{
+private:
+    vector<bool> memo;
+
+public:
+    bool isInterleave(string s1, string s2, string s3)
+    {
+        if (s1.size() + s2.size() != s3.size())
+            return (false);
+        size_t pos = 0;
+
+        vector<bool> memo(s2.size() + 1, false);
+        memo[0] = true;
+
+        for (size_t i = 0; i <= s1.size(); i++)
+        {
+            for (size_t j = 0; j <= s2.size(); j++)
+            {
+                if (i == 0 && j == 0)
+                    continue;
+
+                pos = i + j - 1;
+
+                if ((i > 0 && memo[j] && s1[i - 1] == s3[pos]) ||
+                    (j > 0 && memo[j - 1] && s2[j - 1] == s3[pos]))
+                    memo[j] = true;
+                else
+                    memo[j] = false;
+            }
+        }
+        return (memo[s2.size()]);
+    }
+};
+
+void testcase(string s1, string s2, string s3)
+{
+    Solution s;
+    bool result;
+
+    result = s.isInterleave(s1, s2, s3);
+    cout << boolalpha << "result = " << result << endl;
+}
+
+int main()
+{
+    testcase("aabcc", "dbbca", "aadbbcbcac");
+    testcase("aabcc", "dbbca", "aadbbbaccc");
+    testcase("a", "", "a");
+    testcase("", "", "");
+}
