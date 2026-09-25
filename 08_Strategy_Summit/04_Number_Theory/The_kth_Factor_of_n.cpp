@@ -34,21 +34,52 @@ using namespace std;
 #include <iostream>
 
 /*
-if i need to do in the normal way (n % i) where i go from 1 to n
-the optimized way first i reduce the value n / i(1 to n) than do the opposite n * i and generate(i,n * i) factors
+If I need to do it in the normal way, I check (n % i)
+where i goes from 1 to n.
+
+In the optimized way I do these steps:
+    * Find the total number of divisors.
+    * Check both sides, left and right, simultaneously.
+    * When I find the result, I return "i" for the left side and "n / i" for the right side.
+    * If the cycle ends, I return -1.
+    * The cycle ends when I have checked all the valid divisor pairs.
 */
+
 class Solution
 {
+private:
+    int give_total_divisor(int n, int total = 0)
+    {
+        for (int i = 1; n / i >= i; i++)
+        {
+            if (n % i != 0)
+                continue;
+
+            total++;
+            if (n / i != i)
+                total++;
+        }
+        return (total + 1);
+    }
+
 public:
     int kthFactor(int n, int k)
     {
-        pair<int, int> possibility;
-        int divisor = n;
+        int left = 0;
+        int right = give_total_divisor(n);
 
-        for (size_t i = 1; divisor > 0; i++)
+        for (int i = 1; i <= n; i++)
         {
-            divisor = n / i;
-            possibility = {i, divisor};
+            if (n % i != 0)
+                continue;
+
+            left++;
+            right--;
+
+            if (left == k)
+                return (i);
+            else if (right == k)
+                return (n / i);
         }
         return (-1);
     }
@@ -61,6 +92,10 @@ int main()
     int k;
     int result;
 
+    n = 20;
+    k = 4;
+    result = s.kthFactor(n, k);
+    cout << "result = " << result << endl;
     n = 12;
     k = 3;
     result = s.kthFactor(n, k);
@@ -73,6 +108,11 @@ int main()
 
     n = 4;
     k = 4;
+    result = s.kthFactor(n, k);
+    cout << "result = " << result << endl;
+
+    n = 24;
+    k = 6;
     result = s.kthFactor(n, k);
     cout << "result = " << result << endl;
 }
