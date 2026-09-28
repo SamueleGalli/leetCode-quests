@@ -38,12 +38,17 @@ Constraints:
 using namespace std;
 
 #include <iostream>
+#include <vector>
 
 class Solution
 {
 public:
     bool canWinNim(int n)
     {
+        if (n % 4 == 0)
+            return (false);
+        else
+            return (true);
     }
 };
 
@@ -55,13 +60,21 @@ int main()
 
     n = 4;
     result = s.canWinNim(n);
-    cout << "result = " << result << endl;
+    cout << boolalpha << "result = " << result << endl;
 
     n = 1;
     result = s.canWinNim(n);
-    cout << "result = " << result << endl;
+    cout << boolalpha << "result = " << result << endl;
 
     n = 2;
     result = s.canWinNim(n);
-    cout << "result = " << result << endl;
+    cout << boolalpha << "result = " << result << endl;
+
+    n = 8;
+    result = s.canWinNim(n);
+    cout << boolalpha << "result = " << result << endl;
+
+    n = 42;
+    result = s.canWinNim(n);
+    cout << boolalpha << "result = " << result << endl;
 }
