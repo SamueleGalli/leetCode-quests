@@ -44,12 +44,98 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
+#include <algorithm>
+
+enum role
+{
+    Cat = 0,
+    Mouse = 1
+};
 
 class Solution
 {
+private:
+    vector<vector<vector<bool>>> seen;
+    vector<vector<vector<int>>> memo;
+
+    int help_choose(int lose, int win, int state, int condition)
+    {
+        if (condition == -1 || condition == lose)
+        {
+            if (state == win)
+                condition = win;
+            else if (state == 0)
+                condition = 0;
+            else
+                condition = lose;
+        }
+        return (condition);
+    }
+
+    int cat_vs_mouse(int c, int m, role type, const vector<vector<int>> &graph, int i)
+    {
+        bool draw = true;
+        int condition = -1;
+
+        if (type == Mouse && find(graph[m].begin(), graph[m].end(), 0) != graph[m].end())
+            return (1);
+
+        for (const int &path : graph[i])
+        {
+            if (type == Cat)
+            {
+                if (path == 0 || seen[path][m][Mouse] == true)
+                {
+                    if (seen[path][m][Mouse] == true)
+                        condition = 0;
+                    continue;
+                }
+                draw = false;
+                condition = help_choose(1, 2, win_lose_draw(path, m, graph, Mouse), condition);
+            }
+            else if (seen[c][path][Cat] == false)
+            {
+                draw = false;
+                condition = help_choose(2, 1, win_lose_draw(c, path, graph, Cat), condition);
+            }
+            else
+                condition = 0;
+        }
+        if (draw)
+            return (0);
+        return (condition);
+    }
+
+    int win_lose_draw(size_t c, size_t m, const vector<vector<int>> &graph, role type)
+    {
+        int condition;
+
+        if (memo[c][m][type] != -1)
+            return (memo[c][m][type]);
+
+        if (c == m)
+            return (2);
+
+        seen[c][m][type] = true;
+
+        if (type == Cat)
+            condition = cat_vs_mouse(c, m, type, graph, c);
+        else
+            condition = cat_vs_mouse(c, m, type, graph, m);
+
+        memo[c][m][type] = condition;
+        return (condition);
+    }
+
 public:
     int catMouseGame(vector<vector<int>> &graph)
     {
+        seen.clear();
+        seen.resize(graph.size(), vector<vector<bool>>(graph.size(), vector<bool>(2, false)));
+        memo.clear();
+        memo.resize(graph.size(), vector<vector<int>>(graph.size(), vector<int>(2, -1)));
+        return (win_lose_draw(2, 1, graph, Mouse));
     }
 };
 
@@ -64,6 +150,59 @@ int main()
     cout << "result = " << result << endl;
 
     graph = {{1, 3}, {0}, {3}, {0, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2}, {2, 3}, {0, 1}, {1}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{3}, {3}, {3}, {0, 1, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{3}, {3}, {4}, {0, 1, 4}, {2, 3}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{3}, {3, 4}, {4}, {0, 1}, {1, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2, 3}, {3}, {0, 3}, {0, 1, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{1, 3}, {0}, {3}, {0, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{3}, {3}, {3}, {0, 1, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2, 3}, {2, 4}, {0, 1, 4}, {0, 4}, {1, 2, 3}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2, 4}, {2, 3}, {0, 1, 4}, {1, 4}, {0, 2, 3}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2, 3, 5}, {3, 4}, {0, 4, 5}, {0, 1, 4, 5}, {1, 2, 3, 5}, {0, 2, 3, 4}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2, 3}, {3, 4}, {0, 4}, {0, 1, 4}, {1, 2, 3}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    graph = {{2, 5}, {3}, {0, 4, 5}, {1, 4, 5}, {2, 3}, {0, 2, 3}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << endl;
+
+    cout << "deve essere 2\n\n";
+    graph = {{4}, {2, 3, 5}, {1, 5, 3}, {1, 2}, {0}, {1, 2}};
     result = s.catMouseGame(graph);
     cout << "result = " << result << endl;
 }
