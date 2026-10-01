@@ -2,7 +2,7 @@
     Is an algorithmic strategy that takes the option that looks best at that moment
     The objective is to arrive at the best overall solution
 
-    Exemple:
+    Example:
         subject: need to arrive at 18
         vector<int> coins = {10, 5, 2, 1, 50, 20};
         takes 10 (18 - 10 = 8)
@@ -23,3 +23,22 @@
     but the memo has two dimensions,
     usually represented as dp[i][j],
     where the state depends on two variables
+
+- Retrograde Analysis
+    Instead of simulating the game from the initial position,
+    we consider all possible game states and solve them backwards,
+    starting from the states whose outcome is already known
+
+    Example:
+    
+    Known terminal states
+        ↓
+    Their predecessors
+        ↓
+    More solved states
+        ↓
+    Their predecessors
+        ↓
+    ...
+        ↓
+    Initial state
