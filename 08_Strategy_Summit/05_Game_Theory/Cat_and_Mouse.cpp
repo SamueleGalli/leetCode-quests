@@ -45,6 +45,11 @@ using namespace std;
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <algorithm>
+
+/*
+TODO Da capire meglio
+*/
 
 enum role
 {
@@ -52,67 +57,109 @@ enum role
     Mouse = 1
 };
 
+struct pet
+{
+    int m;
+    int c;
+    role type;
+
+    pet(int m, int c, role type) : m(m), c(c), type(type)
+    {
+    }
+};
+
 class Solution
 {
 private:
     vector<vector<vector<int>>> possible;
-    queue<tuple<int, int, role>> q;
+    vector<vector<vector<size_t>>> lose;
+    queue<pet> q;
 
-    void set_cat_mouse(vector<vector<int>> &graph)
+    void set_game(vector<vector<int>> &graph)
     {
+        possible.assign(graph.size(), vector<vector<int>>(graph.size(), vector<int>(2, 0)));
+        lose.assign(graph.size(), vector<vector<size_t>>(graph.size(), vector<size_t>(2, 0)));
+
+        for (size_t i = 0; i < graph.size(); i++)
+        {
+            for (size_t j = 0; j < graph.size(); j++)
+            {
+                lose[i][j][Mouse] = graph[i].size();
+                lose[i][j][Cat] = graph[j].size();
+                if (find(graph[j].begin(), graph[j].end(), 0) != graph[j].end())
+                    lose[i][j][Cat]--;
+            }
+        }
+
         for (size_t i = 1; i < graph.size(); i++)
         {
-            possible[i][i][Cat] = 2;
             possible[i][i][Mouse] = 2;
-
-            q.push({i, i, Cat});
-            q.push({i, i, Mouse});
-        }
-
-        for (size_t i = 1; i < graph.size(); i++)
-        {
-            possible[0][i][Cat] = 1;
+            possible[i][i][Cat] = 2;
             possible[0][i][Mouse] = 1;
+            possible[0][i][Cat] = 1;
 
-            q.push({0, i, Cat});
-            q.push({0, i, Mouse});
+            q.push(pet(i, i, Cat));
+            q.push(pet(i, i, Mouse));
+            q.push(pet(0, i, Cat));
+            q.push(pet(0, i, Mouse));
         }
+    }
+
+    void set_win_lose(int m, int c, role other, int win, int lost)
+    {
+        if (other == Cat)
+            possible[m][c][other] = win;
+        else
+            possible[m][c][other] = lost;
+
+        q.push({m, c, other});
+    }
+
+    void cat_mouse(int m, int c, role other, int origin)
+    {
+        bool win = false;
+        if (possible[m][c][other] != 0)
+            return;
+
+        int end_state = (other == Mouse ? 1 : 2);
+        if (origin == end_state)
+            win = true;
+        else if (origin != 0)
+            lose[m][c][other]--;
+
+        if (win)
+            set_win_lose(m, c, other, 2, 1);
+        else if (lose[m][c][other] == 0)
+            set_win_lose(m, c, other, 1, 2);
     }
 
 public:
     int catMouseGame(vector<vector<int>> &graph)
     {
-        role type;
-        int m;
-        int c;
-
-        possible.clear();
-        possible.resize(graph.size(), vector<vector<int>>(graph.size(), vector<int>(2, 0)));
-
-        set_cat_mouse(graph);
-
+        set_game(graph);
         while (!q.empty())
         {
-            tuple<int, int, role> state = q.front();
+            pet curr = q.front();
+            role other = (curr.type == Cat ? Mouse : Cat);
+            int origin = possible[curr.m][curr.c][curr.type];
+
             q.pop();
 
-            type = get<2>(state);
-            m = get<0>(state);
-            c = get<1>(state);
-
-            if (type == Cat)
+            if (curr.type == Cat)
             {
-                for (int path : graph[m])
-                {
-                }
+                for (int path : graph[curr.m])
+                    cat_mouse(path, curr.c, other, origin);
             }
             else
             {
-                for (int path : graph[c])
+                for (int path : graph[curr.c])
                 {
+                    if (path != 0)
+                        cat_mouse(curr.m, path, other, origin);
                 }
             }
         }
+        return (possible[1][2][Mouse]);
     }
 };
 
@@ -122,75 +169,23 @@ int main()
     vector<vector<int>> graph;
     int result;
 
-    /*  graph = {{2, 5}, {3}, {0, 4, 5}, {1, 4, 5}, {2, 3}, {0, 2, 3}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{1, 3}, {0}, {3}, {0, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2}, {2, 3}, {0, 1}, {1}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{3}, {3}, {3}, {0, 1, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{3}, {3}, {4}, {0, 1, 4}, {2, 3}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{3}, {3, 4}, {4}, {0, 1}, {1, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 3}, {3}, {0, 3}, {0, 1, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{1, 3}, {0}, {3}, {0, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{3}, {3}, {3}, {0, 1, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 3}, {2, 4}, {0, 1, 4}, {0, 4}, {1, 2, 3}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 4}, {2, 3}, {0, 1, 4}, {1, 4}, {0, 2, 3}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 3, 5}, {3, 4}, {0, 4, 5}, {0, 1, 4, 5}, {1, 2, 3, 5}, {0, 2, 3, 4}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 3}, {3, 4}, {0, 4}, {0, 1, 4}, {1, 2, 3}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 5}, {3}, {0, 4, 5}, {1, 4, 5}, {2, 3}, {0, 2, 3}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{4}, {2, 3, 5}, {1, 5, 3}, {1, 2}, {0}, {1, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 6}, {2, 4, 5, 6}, {0, 1, 3, 5, 6}, {2}, {1, 5, 6}, {1, 2, 4}, {0, 1, 2, 4}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;
-
-     graph = {{2, 3}, {3, 4}, {0, 4}, {0, 1}, {1, 2}};
-     result = s.catMouseGame(graph);
-     cout << "result = " << result << endl;*/
-
-    graph = {{5, 6}, {3, 4}, {6}, {1, 4, 5}, {1, 3, 5}, {0, 3, 4, 6}, {0, 2, 5}};
+    graph = {{2}, {2}, {0, 1}};
     result = s.catMouseGame(graph);
-    cout << "result = " << result << endl;
+    cout << "result = " << result << "\n\n\n";
+
+    graph = {{1}, {0, 2}, {1}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << "\n\n\n";
+
+    graph = {{2, 5}, {3}, {0, 4, 5}, {1, 4, 5}, {2, 3}, {0, 2, 3}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << "\n\n\n";
+
+    graph = {{3}, {3}, {3}, {0, 1, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << "\n\n\n";
+
+    graph = {{3}, {3, 4}, {4}, {0, 1}, {1, 2}};
+    result = s.catMouseGame(graph);
+    cout << "result = " << result << "\n\n\n";
 }
