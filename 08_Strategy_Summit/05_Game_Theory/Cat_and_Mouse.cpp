@@ -47,10 +47,6 @@ using namespace std;
 #include <queue>
 #include <algorithm>
 
-/*
-TODO Da capire meglio
-*/
-
 enum role
 {
     Cat = 0,
@@ -98,10 +94,10 @@ private:
             possible[0][i][Mouse] = 1;
             possible[0][i][Cat] = 1;
 
-            q.push(pet(i, i, Cat));
             q.push(pet(i, i, Mouse));
-            q.push(pet(0, i, Cat));
+            q.push(pet(i, i, Cat));
             q.push(pet(0, i, Mouse));
+            q.push(pet(0, i, Cat));
         }
     }
 
