@@ -61,7 +61,7 @@ INSERT INTO Transactions
 VALUES(123,'US','approved',2000,'2019-01-01');
 
 INSERT INTO Transactions
-VALUES(124,'DE','approved',1000,'2019-01-07');
+VALUES(124,'DE','approved',2000,'2019-01-07');
 
 SELECT *
 FROM Transactions;
