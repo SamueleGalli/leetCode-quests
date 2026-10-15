@@ -1,3 +1,4 @@
+/*
 Table: Students
 
     +---------------+---------+
@@ -97,3 +98,97 @@ Output:
             Alex did not attend any exams.
             John attended the Math exam 1 time, the Physics exam 1 time, and the Programming exam 1 time.
 */
+
+DROP TABLE IF EXISTS Students;
+DROP TABLE IF EXISTS Subjects;
+DROP TABLE IF EXISTS Examinations;
+
+
+CREATE TABLE Students
+(
+    student_id INTEGER PRIMARY KEY,
+    student_name TEXT
+);
+
+CREATE TABLE Subjects
+(
+    subject_name TEXT PRIMARY KEY
+);
+
+CREATE TABLE Examinations
+(
+    student_id INTEGER,
+    subject_name TEXT
+);
+
+INSERT INTO Students
+VALUES(1,'Alice');
+
+INSERT INTO Students
+VALUES(2,'Bob');
+
+INSERT INTO Students
+VALUES(13,'Jhon');
+
+INSERT INTO Students
+VALUES(6,'Alex');
+
+
+
+INSERT INTO Subjects
+VALUES('Math');
+
+INSERT INTO Subjects
+VALUES('Physics');
+
+INSERT INTO Subjects
+VALUES('Programming');
+
+
+
+INSERT INTO Examinations
+VALUES(1,'Math');
+
+INSERT INTO Examinations
+VALUES(1,'physics');
+
+INSERT INTO Examinations
+VALUES(1,'Programming');
+
+INSERT INTO Examinations
+VALUES(2,'Programming');
+
+INSERT INTO Examinations
+VALUES(1,'Physics');
+
+INSERT INTO Examinations
+VALUES(1,'Math');
+
+INSERT INTO Examinations
+VALUES(13,'Math');
+
+INSERT INTO Examinations
+VALUES(13,'Programming');
+
+INSERT INTO Examinations
+VALUES(13,'Physics');
+
+INSERT INTO Examinations
+VALUES(2,'Math');
+
+INSERT INTO Examinations
+VALUES(1,'Math');
+
+SELECT *
+FROM Students;
+
+.print ''
+
+SELECT *
+FROM Subjects;
+
+.print ''
+
+SELECT *
+FROM Examinations;
+
