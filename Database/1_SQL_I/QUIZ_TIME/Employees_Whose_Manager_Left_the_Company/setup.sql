@@ -36,11 +36,10 @@ Output:
     +-------------+
     | 11          |
     +-------------+
-
-        Explanation: 
-            The employees with a salary less than $30000 are 1 (Kalel) and 11 (Joziah).
-            Kalel's manager is employee 11, who is still in the company (Joziah).
-            Joziah's manager is employee 6, who left the company because there is no row for employee 6 as it was deleted.
+    Explanation: 
+        The employees with a salary less than $30000 are 1 (Kalel) and 11 (Joziah).
+        Kalel's manager is employee 11, who is still in the company (Joziah).
+        Joziah's manager is employee 6, who left the company because there is no row for employee 6 as it was deleted.
 */
 
 DROP TABLE IF EXISTS Employees;

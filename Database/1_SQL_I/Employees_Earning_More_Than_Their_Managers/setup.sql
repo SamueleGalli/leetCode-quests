@@ -35,7 +35,8 @@ Output:
     | Joe      |
     +----------+
 
-    Explanation: Joe is the only employee who earns more than his manager.
+    Explanation:
+        Joe is the only employee who earns more than his manager.
 */
 
 DROP TABLE IF EXISTS Employee;
