@@ -70,3 +70,29 @@ Output:
 
 * Note: This question is the same as 3054: Binary Tree Nodes.
 */
+
+DROP TABLE IF EXISTS Tree;
+
+CREATE TABLE Tree
+(
+    id INTEGER,
+    p_id INTEGER
+);
+
+INSERT INTO Tree
+VALUES(1,NULL);
+
+INSERT INTO Tree
+VALUES(2,1);
+
+INSERT INTO Tree
+VALUES(3,1);
+
+INSERT INTO Tree
+VALUES(4,2);
+
+INSERT INTO Tree
+VALUES(5,2);
+
+SELECT *
+FROM Tree;
