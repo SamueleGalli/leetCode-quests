@@ -34,22 +34,22 @@ Table: Examinations
 There is no primary key (column with unique values) for this table. It may contain duplicates.
 Each student from the Students table takes every course from the Subjects table.
 Each row of this table indicates that a student with ID student_id attended the exam of subject_name.
+
 Write a solution to find the number of times each student attended each exam.
 Return the result table ordered by student_id and subject_name.
 The result format is in the following example.
 
 Example 1:
-
 Input: 
-Students table:
-    +------------+--------------+
-    | student_id | student_name |
-    +------------+--------------+
-    | 1          | Alice        |
-    | 2          | Bob          |
-    | 13         | John         |
-    | 6          | Alex         |
-    +------------+--------------+
+    Students table:
+        +------------+--------------+
+        | student_id | student_name |
+        +------------+--------------+
+        | 1          | Alice        |
+        | 2          | Bob          |
+        | 13         | John         |
+        | 6          | Alex         |
+        +------------+--------------+
 Subjects table:
     +--------------+
     | subject_name |

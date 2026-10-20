@@ -1,0 +1,8 @@
+Learned basics of sql formatting and query find and searching
+To execute and try it out please use = 'sqlite3 -header -column -nullvalue NULL Your_name_for_database.db < setup.sql'
+Please substitute "Your_name_for_database" with your favorite database name
+and to run substitute setup with Solution
+If you see you will get the database
+
+REFERENCE FOR VARIOUS KEYWORD used:
+

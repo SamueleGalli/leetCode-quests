@@ -37,13 +37,13 @@ Table: MovieRating
 (movie_id, user_id) is the primary key (column with unique values) for this table.
 This table contains the rating of a movie by a user in their review.
 created_at is the user's review date. 
+
 Write a solution to:
 * Find the name of the user who has rated the greatest number of movies. In case of a tie, return the lexicographically smaller user name.
 * Find the movie name with the highest average rating in February 2020. In case of a tie, return the lexicographically smaller movie name.
 The result format is in the following example.
 
 Example 1:
-
 Input: 
     Movies table:
         +-------------+--------------+

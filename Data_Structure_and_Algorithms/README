@@ -7,7 +7,8 @@ Each topic has a short explanation of the concepts used and the subject of the p
 The exercises are taken from LeetCode Questlines, and I primarily solve them in C++
 I try to follow the programming style and best practices as closely as possible
 
-
+To execute then you can use this command here "c++ -g -Wall -Werror -Wextra -s the_program_to_execute -o your_custom_name && valgrind --show-leak-kinds=all --leak-check=full --track-origins-yes -s ./your_custom_name
+your_custom_name to define a custom nome to the program and the_program_to_execute which program you want to try
 
 Extra:
 - Lambda: anonymous function used to customize existing algorithms

@@ -14,6 +14,7 @@ Each row of this table indicates the id of a customer, their name, and the id of
 Find the names of the customer that are either:
 referred by any customer with id != 2.
 not referred by any customer.
+
 Return the result table in any order.
 The result format is in the following example.
 

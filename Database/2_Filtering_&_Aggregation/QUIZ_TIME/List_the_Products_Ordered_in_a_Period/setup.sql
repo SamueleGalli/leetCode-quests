@@ -25,6 +25,7 @@ Table: Orders
 This table may have duplicate rows.
 product_id is a foreign key (reference column) to the Products table.
 unit is the number of products ordered in order_date.
+
 Write a solution to get the names of products that have at least 100 units ordered in February 2020 and their amount.
 Return the result table in any order.
 The result format is in the following example.
