@@ -4,11 +4,11 @@
   - Is an algorithmic strategy that takes the option that looks **best** at that moment
   - The objective is to arrive at the **best overall solution**
 
-    ```mermaid
-    block-beta
-        columns 6
-        A["10"] B["5"] C["2"] D["1"] E["50"] F["20"]
-    ```
+  ```mermaid
+  block-beta
+      columns 6
+      A["10"] B["5"] C["2"] D["1"] E["50"] F["20"]
+  ```
 
   - **Subject**: Need to arrive at **18**
     - `Vector<int> coins = {10, 5, 2, 1, 50, 20}`;
@@ -22,8 +22,8 @@
 ---
 
 - **Dynamic Programming**
-  - Solving a problem by dividing it into smaller subproblems and saving the calculated results so they can be reused avoiding unnecessary recalculations.
-  - It can use a memo `e.g. a vector` to save data.
+  - Solving a problem by dividing it into smaller subproblems and saving the calculated results so they can be reused avoiding unnecessary recalculations
+  - It can use a memo `e.g. a vector` to save data
 
 ---
 
@@ -35,7 +35,7 @@
 - **Retrograde Analysis**
     Instead of simulating the game from the initial position, we consider all possible game states and solve them backwards, starting from the states whose outcome is **already known**
 
-    ```mermaid
-    flowchart TD
-    A["Identify Terminal States  (WIN / LOSE)"] --> B["Predecessor States"] --> C["Initial State"]
-    ```
+```mermaid
+flowchart TD
+A["Identify Terminal States  (WIN / LOSE)"] --> B["Predecessor States"] --> C["Initial State"]
+```

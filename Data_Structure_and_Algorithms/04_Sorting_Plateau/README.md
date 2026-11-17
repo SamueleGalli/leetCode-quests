@@ -20,7 +20,7 @@
   - **Quickselect** - `find`:
     - Select a pivot
     - Partition the array so that smaller elements are on the left and larger elements are on the right
-    - Discard the "useless" portion and continue until the target element is found.
+    - Discard the "useless" portion and continue until the target element is found
 
 ---
 

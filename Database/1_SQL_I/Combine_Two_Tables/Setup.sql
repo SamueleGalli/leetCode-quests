@@ -93,5 +93,7 @@ VALUES (2,3,'Leetcode', 'California');
 
 
 SELECT * FROM Person;
+
 .print ''
+
 SELECT * FROM Address;

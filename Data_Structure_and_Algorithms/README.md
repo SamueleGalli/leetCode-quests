@@ -17,10 +17,9 @@ You can compile and run the program using the following command:
 c++ -g -Wall -Werror -Wextra -std=c++98 the_program_to_execute.cpp -o your_custom_name && valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes -s ./your_custom_name
 ```
 
-- **the_program_to_execute.cpp**: the source file you want to compile.
-- **your_custom_name**: the custom name you want to give to the executable.
-
-Replace these placeholders with the appropriate file name and executable name.
+- **the_program_to_execute.cpp**: the source file you want to compile
+- **your_custom_name**: the custom name you want to give to the executable
+*Replace these placeholders with the appropriate file name and executable name*
 
 ---
 
@@ -30,44 +29,44 @@ Replace these placeholders with the appropriate file name and executable name.
   - **Predicate functions**:
     - `Return true`  → the condition is satisfied
     - `Return false` → the condition is not satisfied
-    - **Comparator Function** - In sorting algorithms such as **std::sort**:
-      - `Return true`  → the first element should come before the second**no swap**
-      - `Return false` → the first element should not come before the second **Swap**
-      - `The algorithm may then reorder/swap the elements)`
+  - **Comparator Function** - In sorting algorithms such as **std::sort**:
+    - `Return true`  → the first element should come before the second**no swap**
+    - `Return false` → the first element should not come before the second **Swap**
+  - `The algorithm may then reorder/swap the elements)`
 
-    ```cpp
-    [Capture](parameters) -> return_type
-    {
-        body
-    };
+  ```cpp
+  [Capture](parameters) -> return_type
+  {
+      body
+  };
 
-    //Ascending order
-    std::sort(values.begin(), values.end(),
-    [](int a, int b)
-    {
-        return a < b;
-    };
+  //Ascending order
+  std::sort(values.begin(), values.end(),
+  [](int a, int b)
+  {
+      return a < b;
+  };
 
-    //Descending order
-    std::sort(values.begin(), values.end(),
-    [](int a, int b)
-    {
-        return a > b;
-    };
-    ```
+  //Descending order
+  std::sort(values.begin(), values.end(),
+  [](int a, int b)
+  {
+      return a > b;
+  };
+  ```
 
-    | **Capture** | **Meaning** |
-    | :--- | :--- |
-    | [] | Captures nothing |
-    | [x] | Captures x by value |
-    | [&x] | Captures x by reference |
-    | [=] | Captures all used external variables by value |
-    | [&] | Captures all used external variables by reference |
-    | [=, &x] | Captures all by value, except x by reference |
-    | [&, x] | Captures all by reference, except x by value |
+  | **Capture** | **Meaning** |
+  | :--- | :--- |
+  | `[]` | Captures nothing |
+  | `[x]` | Captures x by value |
+  | `[&x]` | Captures x by reference |
+  | `[=]` | Captures all used external variables by value |
+  | `[&]` | Captures all used external variables by reference |
+  | `[=, &x]` | Captures all by value, except x by reference |
+  | `[&, x]` | Captures all by reference, except x by value |
 
-    | **Component** | **Meaning** |
-    | :--- | :--- |
-    | Parameters | Values passed to the lambda |
-    | -> return_type | Specifies the return type explicitly |
-    | Body | Contains the code executed by the lambda |
+  | **Component** | **Meaning** |
+  | :--- | :--- |
+  | `Parameters` | Values passed to the lambda |
+  | `-> return_type` | Specifies the return type explicitly |
+  | `Body` | Contains the code executed by the lambda |

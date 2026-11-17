@@ -4,11 +4,11 @@
   - A data structure with contiguous memory allocation
   - `O(1)` random access to elements via indices
 
-    ```mermaid
-    block-beta
-        columns 6
-        A["10"] B["50"] C["30"] D["60"] E["20"] F["40"]
-    ```
+```mermaid
+block-beta
+    columns 6
+    A["10"] B["50"] C["30"] D["60"] E["20"] F["40"]
+```
 
 ---
 

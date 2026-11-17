@@ -8,12 +8,12 @@
     - `G = (V, E)`
   - Where:
 
-    - `V` represents the set of vertices.
+    - `V` represents the set of vertices
 
-    - `E` represents the set of edges.
+    - `E` represents the set of edges
   - There are some helper data structures used with graphs, such as:
     - **Union Find** - `Disjoint Set Union`
-      - It uses an indexed array to keep track of the parent of each element.
+      - It uses an indexed array to keep track of the parent of each element
       - It is used to:
         - **Find**: Find the representative of the group containing an element
 
@@ -38,7 +38,7 @@
 ---
 
 - **DFS** - `Depth First Search`
-  - Recursion-based traversal that goes to the deepest node possible, then backtracks to explore remaining branches.
+  - Recursion-based traversal that goes to the deepest node possible, then backtracks to explore remaining branches
 
 ---
 
