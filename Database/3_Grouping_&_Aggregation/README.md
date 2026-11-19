@@ -4,7 +4,8 @@ The **Keywords** i encountered in this section are:
 
 | **KEYWORD** | **DEFINITION** |
 | :--- | :--- |
-| `UNION ALL` | Combines the **Rows** returned by multiple queries, keeping duplicates |
+| `UNION` | Combines the rows returned by multiple `SELECT` statements, removing duplicate rows |
+| `UNION ALL` | Combines the rows returned by multiple `SELECT` statements, keeping duplicates |
 | `AVG()` | Calculates the **Average** of numeric **Values** |
 | `CROSS JOIN` | Combines every **Row** from the first **Table** with every **Row** from the second **Table** |
 | `EXISTS (Subquery)` | Checks whether the **Subquery** returns at least one **Row** |
