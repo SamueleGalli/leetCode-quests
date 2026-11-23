@@ -32,9 +32,6 @@ using namespace std;
 #include <optional>
 #include <unordered_map>
 
-/*
-TODO Risolvi problema
-*/
 // Definition for a binary tree node.
 struct TreeNode
 {
@@ -45,11 +42,6 @@ struct TreeNode
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-
-/*
-post-order(left - right - root)
-in-order(left - root - right)
-*/
 
 class Solution
 {

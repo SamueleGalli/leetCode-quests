@@ -43,7 +43,6 @@ public:
             if (word[i] >= 65 && word[i] <= 90)
                 c++;
         }
-        cout << "c = " << c << endl;
         if (c == static_cast<int>(word.size()) ||
             (c == 1 && isupper(word[0])) || c == 0)
             return (true);

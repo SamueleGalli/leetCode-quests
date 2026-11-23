@@ -1,8 +1,8 @@
 /*
 
-You are given an array of intervals, where intervals[i] = [starti, endi] and each starti is unique.
+You are given an array of intervals, where intervals[i] = [start_i, end_i] and each start_i is unique.
 
-The right interval for an interval i is an interval j such that startj >= endi and startj is minimized. Note that i may equal j.
+The right interval for an interval i is an interval j such that start_j >= end_i and start_j is minimized. Note that i may equal j.
 
 Return an array of right interval indices for each interval i. If no right interval exists for interval i, then put -1 at index i.
 
@@ -32,7 +32,7 @@ Constraints:
 
 * 1 <= intervals.length <= 2 * 10^4
 * intervals[i].length == 2
-* -106 <= starti <= endi <= 106
+* -106 <= start_i <= end_i <= 106
 * The start point of each interval is unique.
 */
 
@@ -41,18 +41,6 @@ using namespace std;
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-void print_vector(const vector<int> &result)
-{
-    cout << "{";
-    for (size_t i = 0; i < result.size(); i++)
-    {
-        cout << result[i];
-        if (i + 1 < result.size())
-            cout << ", ";
-    }
-    cout << "};\n";
-}
 
 class Solution
 {
@@ -88,6 +76,18 @@ public:
         return (result);
     }
 };
+
+void print_vector(const vector<int> &result)
+{
+    cout << "{";
+    for (size_t i = 0; i < result.size(); i++)
+    {
+        cout << result[i];
+        if (i + 1 < result.size())
+            cout << ", ";
+    }
+    cout << "};\n";
+}
 
 int main()
 {

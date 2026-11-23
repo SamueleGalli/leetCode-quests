@@ -1,9 +1,80 @@
 # Sequence Valley
 
 - **Queue**
+
   - There are various type:
-    - **Standard Queue**: A **FIFO** - `First-In, First-Out` data structure where elements are added to the back and removed from the front
 
-    - **Deque**: A `Double-ended queue` A queue that allows insertion and removal from both ends
+    - **Standard Queue** - `queue<type>`
+      - **Header** - `<queue>`
+      - A **FIFO** - `First-In, First-Out` data structure where elements are added to the **Back** and removed from the **Front**
 
-    - **Priority Queue**: A queue where the element with the highest **Max-Heap** or lowest **Min-Heap** priority is always at the front
+      - Available operations:
+        - `push(value)`: Insert a **Value** at the **Back** of the `queue` - *Time Complexity*: `O(1)`
+        - `pop()`: Remove the **First Element** from the `queue` without returning it - *Time Complexity*: `O(1)`
+        - `front()`: Access the **First Element** without removing it - *Time Complexity*: `O(1)`
+        - `back()`: Access the **Last Element** without removing it - *Time Complexity*: `O(1)`
+
+    - **Deque** - `deque<type>`
+      - **Header** - `<deque>`
+      - A `Double-ended queue`: A queue that allows insertion and removal from **Both Ends**
+
+      - Available operations:
+        - `push_back(value)`: Insert a **Value** at the **Back** - *Time Complexity*: `O(1)`
+        - `push_front(value)`: Insert the **Value** at the **Front** - *Time Complexity*: `O(1)`
+        - `pop_back()`: Remove the **Last Element** - *Time Complexity*: `O(1)
+        - `pop_front()`: Remove the **First Element** - *Time Complexity*: `O(1)
+        - `front()`: Return the **First Element** - *Time Complexity*: `O(1)
+        - `back()`: Return the **Last Element** - *Time Complexity*: `O(1)
+
+    - **Priority Queue** - `priority_queue<type, vector<type>>`
+      - **Header** - `<queue>`
+      - A queue where elements are organized according to their **Priority**
+
+      - The two main heap types are:
+        - **Max-Heap** - **Default**: The **Largest Element** is always at the top - `priority_queue<type, vector<type>, less<type>>`
+        - **Min-Heap**: The **Smallest Element** is always at the top - `std::priority_queue<type, vector<type>, greater<type>>`
+
+      - Available operations:
+        - `push(value)`: Insert a **Value** into the `priority_queue` while maintaining the priority order - *Time Complexity*: `O(log n)`
+        - `pop()`: Remove the **Top Element** without returning it - *Time Complexity*: `O(log n)`
+        - `top()`: Access the **Top Element** without removing it - *Time Complexity*: `O(1)`
+
+    - *Note*: Always check `empty()` before accessing or removing elements
+
+---
+
+## Struct
+
+- **Struct**
+  - Like a `class`, it is a **User-Defined Type** that groups **Data** and **Functions** together
+
+  - Main differences from a `class`:
+    - Members are **public** by default, instead of **private**
+    - Inheritance is **public** by default, instead of **private**
+
+---
+
+- **Inheritance**:
+  - Allows a **Derived Class** to inherit **Members** and **Functions** from a **Base Class**, enabling **Code Reuse** and **Specialization**
+
+  - **Related Concepts**:
+    - `protected`: Accessible within the `class`, its `friends` and **Derived Classes**
+    - `friends`: Grants a specific `function` or `class` access to the **private** and **protected** members
+
+  - **Inheritance Access Specifiers** - `DerivedClass : specifier BaseClass`:
+    - `public`: `Public` members remain `public`, while `protected` members remain `protected`
+    - `protected`: `Public` and `protected` members become `protected`
+    - `private`: `Public` and protected members become `private`
+
+### Basic Function
+
+| **FUNCTION** | **LIBRARY** | **DEFINITION** |
+| :---: | :---: | :--- |
+| `isupper(value)` | `<iostream>` | Check whether **Value** is an uppercase `character` |
+| `reverse(v.begin(),v.end())` | `<algorithm>` | **Reverse** the elements in the specified **Range**, modifying it **in place** |
+| `string(number, character)` | `<string>` | Create a `string` by **Repeating Character** the specified number of **Times** |
+| `find(v.being(),v.end(), value)` | `<algorithm>` | Search for **Value** in the specified **Range** |
+| `s.append(other_string)` | `<string>` | **Append** another `string` to the end of a `string` |
+| `s.substring(pos, lenght)` | `<string>` | Return a **Substring** starting at `pos` with the specified `length` |
+| `min/max(num1, num2)` | `<algorithm>` | Return the `Maximum/Minimum` of the given **Values** |
+| `to_string(value)` | `<string>` | Convert a **Numeric Value** into a `string` |
