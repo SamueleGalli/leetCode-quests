@@ -17,7 +17,7 @@ To execute and test the SQL scripts, you need SQLite3 installed
 sqlite3 -header -column -nullvalue NULL Your_name_for_database.db < Setup.sql
 ```
 
-*Please substitute **Your_name_for_database** with your favorite database name*
+_Please substitute **Your_name_for_database** with your favorite database name_
 
 **Step 2** - Execute the **Solution**
 
@@ -27,16 +27,16 @@ sqlite3 -header -column -nullvalue NULL Your_name_for_database.db < Solution.sql
 
 ## SQL Keyword Reference
 
-| **Keyword** | **Definition** |
-| :--- | :--- |
-| `SELECT` | Specifies which **Columns** should be returned |
-| `FROM` | Specifies the source **Table** |
-| `JOIN ... ON` OR `INNER JOIN` | Combines **Rows** from different **Tables** using a matching condition |
-| `WHERE` | Filters individual **Rows** before grouping |
-| `GROUP BY` | **Groups** rows that share the same values in specified **Columns** |
-| `HAVING` | Filters **Groups** |
-| `ORDER BY` | Sorts the resulting rows, using `ASC` - **Ascending** by **Default** or `DESC` - **Descending** when specified |
-| `LIMIT` | **Limits** the number of returned rows |
+| **Keyword**                   | **Definition**                                                                                                 |
+| :---------------------------- | :------------------------------------------------------------------------------------------------------------- |
+| `SELECT`                      | Specifies which **Columns** should be returned                                                                 |
+| `FROM`                        | Specifies the source **Table**                                                                                 |
+| `JOIN ... ON` OR `INNER JOIN` | Combines **Rows** from different **Tables** using a matching condition                                         |
+| `WHERE`                       | Filters individual **Rows** before grouping                                                                    |
+| `GROUP BY`                    | **Groups** rows that share the same values in specified **Columns**                                            |
+| `HAVING`                      | Filters **Groups**                                                                                             |
+| `ORDER BY`                    | Sorts the resulting rows, using `ASC` - **Ascending** by **Default** or `DESC` - **Descending** when specified |
+| `LIMIT`                       | **Limits** the number of returned rows                                                                         |
 
 ### ORDER
 

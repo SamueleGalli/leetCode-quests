@@ -47,11 +47,6 @@ Constraints:
 
 */
 
-/*
-TODO trova il min e il max giorno
-TODO usa ricerca binaria(ovvero vai nel mezzo e dimezza il tempo di ricerca)
-TODO vai a destra o sinistra per verificare il giorno valido
-*/
 using namespace std;
 
 #include <vector>

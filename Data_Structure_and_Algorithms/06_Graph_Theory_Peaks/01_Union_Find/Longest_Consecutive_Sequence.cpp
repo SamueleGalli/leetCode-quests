@@ -25,7 +25,6 @@ Constraints:
 * -10^9 <= nums[i] <= 10^9
 */
 
-/*TODO Little tiny big bug that ad + 1 (I will crush you)*/
 using namespace std;
 
 #include <iostream>

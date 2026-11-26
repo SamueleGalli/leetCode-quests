@@ -65,10 +65,8 @@ private:
         while (low <= high)
         {
             medium = (low + high) / 2;
-            if (prefix[medium - 1] == (prefix[i + medium - 1] -
-                                       (prefix[i - 1] * powers[medium] % MOD) +
-                                       MOD) %
-                                          MOD)
+            if (prefix[medium - 1] == (prefix[i + medium - 1] - 
+            (prefix[i - 1] * powers[medium] % MOD) + MOD) % MOD)
             {
                 dim = medium;
                 low = medium + 1;

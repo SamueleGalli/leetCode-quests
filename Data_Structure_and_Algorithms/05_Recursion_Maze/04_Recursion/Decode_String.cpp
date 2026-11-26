@@ -34,8 +34,6 @@ Constraints:
 using namespace std;
 
 #include <iostream>
-#include <algorithm>
-#include <cctype>
 #include <string>
 
 class Solution

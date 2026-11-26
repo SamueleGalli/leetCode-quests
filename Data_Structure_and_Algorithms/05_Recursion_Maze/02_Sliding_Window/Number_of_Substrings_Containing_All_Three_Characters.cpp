@@ -34,8 +34,6 @@ using namespace std;
 #include <iostream>
 #include <unordered_map>
 
-/*TODO aggiornamento sfasato di poco*/
-
 class Solution
 {
 public:

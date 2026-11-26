@@ -3,7 +3,6 @@
 - **Linked List**
   - **Header**: `None`
   - A **Linear Data** structure where **Elements** are stored in `nodes`, with each `node` containing **Data** and a pointers linking it to other `nodes`
-  
   - **Types**:
     - **Singly Linked List**: Each `node` contains a pointer to the `next node`, forming a sequence from **Head** to **Tail**, ending with `nullptr`
     - **Doubly Linked List**: Each `node` contains pointers to the `previous node` and the `next node`, allowing traversal in **Both Directions**
@@ -12,6 +11,20 @@
 
   - To **Create** a `node` dynamically, we use `new ListNode()`
   - To **Clean** the entire `Linked List`, we must delete all dynamically allocated `nodes` using `delete(node)`
+
+  - _Time Complexity_:
+    - **Singly Linked List**:
+      - _Access / Search_: `O(n)`
+      - _Insert / Delete at Head_: `O(1)`
+      - _Insert at Tail_: `O(1)` - If **Tail Pointer** Is **Available**
+      - _Delete at Tail_: `O(n)`
+      - _Insert After a Given Node_: `O(1)` - If **Node Pointer** Is **Available**
+
+    - **Doubly Linked List**:
+      - _Access / Search_: `O(n)`
+      - _Insert / Delete at Head_: `O(1)`
+      - _Insert / Delete at Tail_: `O(1)` - If **Tail Pointer** Is **Available**
+      - _Insert / Delete at a Given Node_: `O(1)` - If **Node Pointer** Is **Available**
 
 ```cpp
   // Definition for Singly-Linked List.
@@ -59,9 +72,8 @@
   - There are two main types:
     - **map** - `map<key, value>`
       - **Header**: `<map>`
-  
       - Stores **key-Value Pairs** sorted by **key** - ascending by **Default**
-      - Searching, inserting and removing **Elements** have `O(log n)` *time complexity*
+      - Searching, inserting and removing **Elements** have `O(log n)` _time complexity_
 
     ```mermaid
       block-beta
@@ -72,7 +84,7 @@
     - **unordered_map** : `unordered_map<key, value>`
       - **Header**: `<unordered_map>`
       - Stores **key-Value Pairs** without any guaranteed order, using a **Hash Table**
-      - Searching, inserting and removing elements have `O(1)` *average complexity* and `O(n)` *worst-case complexity*
+      - Searching, inserting and removing elements have `O(1)` _average complexity_ and `O(n)` _worst-case complexity_
 
     ```mermaid
       block-beta
@@ -83,7 +95,7 @@
 ---
 
 - **Prefix Sum**
-  - A **Technique** where you create an array to store the **Cumulative Sum** of **Elements** from the beginning up to and including each **Element**, allowing the sum of any **Sub-Range** to be calculated in `O(1)` *time complexity*
+  - A **Technique** where you create an array to store the **Cumulative Sum** of **Elements** from the beginning up to and including each **Element**, allowing the sum of any **Sub-Range** to be calculated in `O(1)` _time complexity_
 
 ```cpp
   sum[i] = sum[i] + sum[i - 1];

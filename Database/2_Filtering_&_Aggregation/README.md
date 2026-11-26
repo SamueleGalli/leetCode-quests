@@ -4,11 +4,11 @@ This section introduces **Aggregate Functions** and how their arguments can incl
 
 The **Keywords** i encountered in this section are:
 
-| **KEYWORD** | **DEFINITION** |
-| :--- | :--- |
-| `COUNT()` | Counts all **Rows** or non-NULL **Values** depending on the argument |
-| `SUM()` | Calculates the total of numeric **Values** |
-| `SELECT DISTINCT` | Returns only **Distinct Rows**, removing duplicate results |
+| **KEYWORD**       | **DEFINITION**                                                       |
+| :---------------- | :------------------------------------------------------------------- |
+| `COUNT()`         | Counts all **Rows** or non-NULL **Values** depending on the argument |
+| `SUM()`           | Calculates the total of numeric **Values**                           |
+| `SELECT DISTINCT` | Returns only **Distinct Rows**, removing duplicate results           |
 
 For the **Tables** i explored a new definition:
 
